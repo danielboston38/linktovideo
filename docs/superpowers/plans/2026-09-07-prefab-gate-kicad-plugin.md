@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_staging.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin'`
 
 - [ ] **Step 3: Write the implementation**
@@ -253,7 +253,7 @@ def stage(board_path, dest):
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_staging.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: PASS, 10 tests
 
 - [ ] **Step 5: Run the whole suite to confirm nothing regressed**
@@ -394,7 +394,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_runner.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin.runner'`
 
 - [ ] **Step 3: Write the implementation**
@@ -486,7 +486,7 @@ def run_check(board_path, main=None, hasher=None):
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_runner.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: PASS, 7 tests
 
 - [ ] **Step 5: Run the whole suite**
@@ -883,7 +883,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 3: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_build_pcm.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'build_pcm'`
 
 - [ ] **Step 4: Write `build_pcm.py`**
@@ -966,7 +966,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 5: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_build_pcm.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: PASS, 9 tests
 
 - [ ] **Step 6: Build the archive and check its size**

@@ -299,11 +299,19 @@ intent — which is what the script above is for.
 
 ```
 export KICAD_CLI=/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli
-python3 prefab-gate/scripts/prefab_gate.py package nes_power_video.kicad_pcb --out pcbway_production
+prefab_gate package nes_power_video.kicad_pcb --out pcbway_production
 ```
 
-The gate in [`prefab-gate/`](./prefab-gate) refuses to write a fab package from a
-board that has not passed DRC with zone refill *and* schematic parity. It hashes
+**prefab-gate now lives in its own repository:
+[danielboston38/prefab-gate](https://github.com/danielboston38/prefab-gate).** It
+is a general-purpose KiCad tool with its own audience and its own MIT licence,
+so it no longer ships inside a hardware project. Install it as a KiCad plugin
+through the Plugin and Content Manager, as a Claude Code plugin
+(`/plugin marketplace add danielboston38/prefab-gate`), or clone it and run
+`scripts/prefab_gate.py` directly.
+
+The gate refuses to write a fab package from a board that has not passed DRC
+with zone refill *and* schematic parity. It hashes
 the board and schematic after the refill and re-checks them before publishing, so
 the package always describes the board that was actually verified — recorded in
 `manifest.json` alongside every finding, including the cosmetic ones it waived.

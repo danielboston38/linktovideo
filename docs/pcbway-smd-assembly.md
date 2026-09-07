@@ -104,12 +104,14 @@ needed for a PCBWay assembly order.
 ## Regenerating the package
 
 The gate refuses to package a board that has not passed DRC and schematic
-parity, so this is also the verification step:
+parity, so this is also the verification step. `prefab_gate` comes from
+[danielboston38/prefab-gate](https://github.com/danielboston38/prefab-gate),
+which is a separate tool rather than part of this project:
 
 ```bash
 export KICAD_CLI=/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli
 python3 tools/check_nets.py
-python3 prefab-gate/scripts/prefab_gate.py package nes_power_video.kicad_pcb --out pcbway_production
+prefab_gate package nes_power_video.kicad_pcb --out pcbway_production
 python3 tools/pcbway_assembly.py nes_power_video.kicad_pcb pcbway_production/<new-timestamp>
 ```
 

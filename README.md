@@ -267,8 +267,9 @@ is only 5 V.
 
 ## Design checks
 
-Two safety nets sit alongside ERC and DRC, both aimed at faults this board has
-actually shipped with.
+Three safety nets sit alongside ERC and DRC, the first two aimed at faults this
+board has actually shipped with, the third at the gap between checking a board
+and fabricating it.
 
 ### `tools/check_nets.py`
 
@@ -295,6 +296,21 @@ configuration channels. These catch the layout-adjacency version of the same
 mistakes. They cannot catch a wrong net assignment — DRC has no view of design
 intent — which is what the script above is for.
 
+### `prefab-gate`
+
+```
+export KICAD_CLI=/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli
+python3 prefab-gate/scripts/prefab_gate.py package nes_power_video.kicad_pcb --out pcbway_production
+```
+
+The gate in [`prefab-gate/`](./prefab-gate) refuses to write a fab package from a
+board that has not passed DRC with zone refill *and* schematic parity. It hashes
+the board and schematic after the refill and re-checks them before publishing, so
+the package always describes the board that was actually verified — recorded in
+`manifest.json` alongside every finding, including the cosmetic ones it waived.
+
+Run `check` instead of `package` to get the verdict without writing files.
+
 ## Assembly
 
 <!-- Add step-by-step or reference photos here once you've got a documented build process -->
@@ -312,6 +328,30 @@ kicad-cli sch export bom --group-by '' \
     --fields 'Reference,Value,Manufacturer,MPN,LCSC,Datasheet,Supplier Link,Spec' \
     -o bom.csv nes_power_video.kicad_sch
 ```
+
+`BOM.csv`'s `Mount` column marks each line `SMD` or `THT`, taken from the
+footprint's own attributes on the board.
+
+### Having PCBWay fit the SMD parts
+
+Only four parts reflow — C3, R6, U1 and USB-C1 — and all four are on the top
+side, so PCBWay can run single-sided SMT and leave the fifteen through-hole
+parts to you. That takes the two hardest joints on the board (the SOT-23-6 and
+the Type-C receptacle) off the bench without paying for full assembly.
+
+`tools/pcbway_assembly.py` turns a gate package into the SMD-only upload pair,
+deriving the split from the board rather than a hand-kept list:
+
+```
+python3 tools/pcbway_assembly.py nes_power_video.kicad_pcb pcbway_production/<timestamp>
+```
+
+Two things to know before ordering: **U1 is out of stock at both DigiKey and
+Mouser** (112-day factory lead) while LCSC holds 44,000, so PCBWay must be
+pointed at LCSC for it; and **USB-C1 is Hybrid, not SMD** — its four shell
+stakes are through-hole pads on the paste layer, meant to reflow pin-in-paste
+with the rest, not to be left dry. Full detail, including what to upload and
+what not to, is in **[docs/pcbway-smd-assembly.md](./docs/pcbway-smd-assembly.md)**.
 
 Key notes:
 - D1 (zener/TVS): cathode (banded end) toward VBUS/+5V side. From v2 the

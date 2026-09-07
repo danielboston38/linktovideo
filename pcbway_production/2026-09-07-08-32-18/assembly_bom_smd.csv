@@ -1,0 +1,5 @@
+Line#,Qty,Designator,MPN,Manufacturer,Description,Package,Type,LCSC,Datasheet
+1,1,C3,CC0805KRX7R9BB104,YAGEO,"100 nF +/-10%, 50 V, X7R, 0805 (any equivalent >=16 V X7R)",0805,SMD,C49678,https://www.lcsc.com/datasheet/C49678.pdf
+2,1,R6,0805W8F2202T5E,UNI-ROYAL,"22 kOhm +/-1%, 125 mW, 0805 - sets the eFuse current limit, keep 1%",0805,SMD,C17560,https://www.lcsc.com/datasheet/C17560.pdf
+3,1,U1,TPS2553DBVR,Texas Instruments,"Adjustable current-limited power distribution switch, SOT-23-6",SOT-23-6,SMD,C55266,https://www.ti.com/lit/ds/symlink/tps2553.pdf
+4,1,USB-C1,USB4970-00-A,GCT,"USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2)",USB-C receptacle 6P,Hybrid,,https://gct.co/files/drawings/usb4970.pdf

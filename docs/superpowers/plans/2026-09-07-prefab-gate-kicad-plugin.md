@@ -15,7 +15,7 @@
 - **Stdlib only.** KiCad's bundled Python cannot `pip install`. No third-party imports anywhere in shipped code.
 - **The plugin changes nothing without explicitly asking.** It never writes to the user's project. Check only; no packaging from the GUI.
 - **Never run against the open board.** DRC uses `--refill-zones --save-board` and would rewrite the file under the editor. Always stage a copy.
-- **The staged copy is a four-file whitelist:** `<name>.kicad_pcb`, every `*.kicad_sch` in the project directory, `<name>.kicad_pro`, `<name>.kicad_dru`. Never the whole directory.
+- **The staged copy is a whitelist:** `<name>.kicad_pcb`, every `*.kicad_sch`, `<name>.kicad_pro`, `<name>.kicad_dru`, `fp-lib-table`, `sym-lib-table`, and any `${KIPRJMOD}`-relative library those tables name. Never the whole directory. The library tables were added after measurement — without them the staged run invented two `lib_footprint_issues` findings.
 - **Basenames must be preserved when staging.** `kicad-cli pcb drc` derives the schematic from the board's basename and has no flag to override it.
 - **One implementation of the policy.** Blocking-vs-cosmetic decisions live in `gate/`; the plugin consumes them.
 - **Tests are stdlib `unittest`, no pytest.** Run with:
@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_staging.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin'`
 
 - [ ] **Step 3: Write the implementation**
@@ -253,7 +253,7 @@ def stage(board_path, dest):
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_staging.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: PASS, 10 tests
 
 - [ ] **Step 5: Run the whole suite to confirm nothing regressed**
@@ -394,7 +394,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_runner.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin.runner'`
 
 - [ ] **Step 3: Write the implementation**
@@ -486,7 +486,7 @@ def run_check(board_path, main=None, hasher=None):
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_runner.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: PASS, 7 tests
 
 - [ ] **Step 5: Run the whole suite**
@@ -883,7 +883,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 3: Run the tests to verify they fail**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_build_pcm.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'build_pcm'`
 
 - [ ] **Step 4: Write `build_pcm.py`**
@@ -966,7 +966,7 @@ if __name__ == "__main__":
 
 - [ ] **Step 5: Run the tests to verify they pass**
 
-Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest ../tests/test_build_pcm.py -v`
+Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: PASS, 9 tests
 
 - [ ] **Step 6: Build the archive and check its size**

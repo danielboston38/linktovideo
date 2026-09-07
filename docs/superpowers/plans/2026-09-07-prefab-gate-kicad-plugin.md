@@ -1085,13 +1085,13 @@ Remove `prefab-gate/`, point `.claude-plugin/marketplace.json` at the new repo, 
 
 ### Task 8: Submit to the PCM repository — **STOP, needs the user**
 
-> **DO NOT SUBMIT ANYWHERE WITHOUT ASKING FIRST.** Mark stated on 2026-09-07
-> that the submission goes to a **specific address that is not the public one**,
-> and that he will supply it. The `https://gitlab.com/kicad/addons/metadata`
-> URL below is what the public documentation says and is **presumed wrong for
-> this project** until he confirms otherwise. Ask; do not infer the target from
-> documentation, and do not open a merge request against any address he has not
-> given you. An addon submission is public and effectively unsendable once made.
+> **Confirm with Mark before submitting.** The address is
+> `https://gitlab.com/kicad/addons/metadata` — a merge request adding a
+> directory under `packages/` named for the package identifier. The restriction
+> that caused earlier confusion is narrow: **do not submit to
+> `https://gitlab.com/kicad/addons/repository`**, which is the generated
+> repository, not the metadata source. An addon submission is public and
+> effectively unsendable, so it is still a stop-and-ask, not an assumption.
 
 - [ ] **Step 1: Publish a release**
 
@@ -1104,16 +1104,15 @@ cd prefab-gate/kicad && python3 build_pcm.py
 ```
 Set `download_url` in `dist/metadata.submission.json` to the release asset URL. The sha256 must match the asset actually uploaded.
 
-- [ ] **Step 3: Ask Mark for the submission address, then open the merge request**
+- [ ] **Step 3: Open the merge request, after confirming with Mark**
 
-Add `packages/com.github.danielboston38.prefab-gate/metadata.json` (the
-submission copy) plus the 64×64 icon, and open the MR **against the address
-Mark provides**.
+Fork `https://gitlab.com/kicad/addons/metadata`, create
+`packages/com.github.danielboston38.prefab-gate/` containing the submission
+`metadata.json` and the 64×64 icon, and open the MR.
 
-For reference only, the public documentation names
-`https://gitlab.com/kicad/addons/metadata` and says explicitly not to use
-`addons/repository`. Mark has said the correct target is neither the public one
-nor inferable — treat both as wrong until he confirms.
+**Not** `https://gitlab.com/kicad/addons/repository` — that is the generated
+repository and is not where packages are submitted. Several packages sharing a
+namespace may go in one MR; this is a single package.
 
 - [ ] **Step 4: Note the ongoing commitment**
 

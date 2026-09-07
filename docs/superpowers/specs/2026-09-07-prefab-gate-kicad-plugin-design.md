@@ -69,6 +69,31 @@ This is the truthful description of the relationship, and it is worth a
 one-time doc edit to stop pretending otherwise. A submodule was considered and
 rejected: it would preserve the paths at the cost of a permanent papercut.
 
+### SWIG ActionPlugin now, IPC later
+
+KiCad 9.0 introduced an [IPC API](https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/for-addon-developers/index.html)
+that runs plugins out-of-process over a socket. It is the forward-looking
+interface — stable across internal refactors, language-agnostic — and it is
+explicitly *not* what this plugin uses for v0.1.
+
+The gate runs on KiCad **8.0**, because that is when `kicad-cli pcb drc` gained
+`--schematic-parity`. IPC would raise the floor to 9.0 and drop every KiCad 8
+user in exchange for nothing this plugin needs. Among the 85 plugins published
+in KiCad's own repository, 8.0 is the single most common floor (18 packages)
+and 48 still target 7.0 or older; SWIG is not going anywhere soon, and remains
+supported in 9 and 10 rather than deprecated.
+
+What makes this a cheap decision rather than a bet: **the plugin needs exactly
+one thing from KiCad — the path of the open board.** Everything else is
+`kicad-cli` in a subprocess and pure-Python code of our own. That is the
+smallest coupling the job admits, and the architecture below keeps every KiCad
+import inside `action.py`, with a test that runs the other modules without
+KiCad present to prove it. Porting to IPC rewrites one file.
+
+IPC also runs Python plugins in an external interpreter, which leaves the
+dialog an open question — a wx `MessageDialog` is an in-process assumption.
+Worth resolving before a port, not before a first release.
+
 ### Run on a copy, never on the open board
 
 DRC runs with `--refill-zones --save-board`, which rewrites the board file in

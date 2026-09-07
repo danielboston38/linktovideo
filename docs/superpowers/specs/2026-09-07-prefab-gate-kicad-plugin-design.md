@@ -255,13 +255,6 @@ the thing that catches KiCad changing underneath us.
 
 ## Open items
 
-- **Whether `plugins/` may contain subdirectories.** The documentation says
-  plugin code goes "directly here, no subdirectories", but the `gate` package
-  is a directory and most published plugins ship package trees. The likely
-  reading is "do not nest your plugin inside an extra folder" rather than a ban
-  on Python packages. Resolve it by building the zip and installing it through
-  PCM before relying on either reading; if packages really are disallowed,
-  `gate` gets vendored as flat modules with a prefix.
 - **Icons.** Two are needed and neither exists: 64×64 `resources/icon.png` and
   a 24×24 toolbar icon.
 - **Ownership of the `com.github.danielboston38` namespace.** The identifier
@@ -271,6 +264,14 @@ the thing that catches KiCad changing underneath us.
 
 Closed during design: the `kicad_version` floor is 8.0; the package schema is
 the v2 schema linked above, checked rather than inferred.
+
+**`plugins/` may contain subdirectories** — settled by downloading a published
+package rather than by reading. InteractiveHtmlBom, in the official repository,
+ships `plugins/` with five subdirectories including nested Python packages
+(`plugins/ecad/kicad_extra/__init__.py`) and asset directories three levels
+deep. The documentation's "directly here, no subdirectories" means "do not
+nest your plugin inside an extra wrapper folder", not a ban on packages. So
+`gate` ships as `plugins/gate/` and needs no flattening.
 
 ## Success
 

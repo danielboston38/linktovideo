@@ -1009,9 +1009,11 @@ This is the only coverage the wx layer gets, so it is a task rather than a footn
 
 KiCad → Plugin and Content Manager → *Install from File* → `prefab-gate/dist/prefab-gate-0.1.0-pcm.zip`
 
-- [ ] **Step 2: Confirm the open question the spec raised**
+- [ ] **Step 2: Confirm the gate package survived the install**
 
-The spec flags that the documentation says plugin code goes in `plugins/` with "no subdirectories", while the gate is a package. Confirm the install succeeded and `plugins/gate/` survived. If PCM rejected or flattened it, stop and re-plan: `gate` must then be vendored as flat prefixed modules.
+Check that `plugins/gate/` is present in the installed plugin directory and was not flattened.
+
+This is expected to pass and is no longer a design risk: the official repository's InteractiveHtmlBom ships `plugins/` with five subdirectories, including nested packages (`plugins/ecad/kicad_extra/__init__.py`) and assets three levels deep. The documentation's "no subdirectories" means "do not wrap your plugin in an extra folder". Verify anyway — it costs one `ls`.
 
 - [ ] **Step 3: Run it against the NES board**
 

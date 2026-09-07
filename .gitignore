@@ -39,6 +39,10 @@ __pycache__/
 #   python3 tools/pcbway_assembly.py nes_power_video.kicad_pcb pcbway_production/<timestamp>
 pcbway_production/
 
+# KiCad-Diff output — per-commit board checkouts, layer SVGs and the web
+# gallery. Written into the repo by `kidiff`, regenerated on every run.
+.kidiff/
+
 # Gerbers, drill files and board reports, wherever they are written.
 *.gbr
 *.gbrjob

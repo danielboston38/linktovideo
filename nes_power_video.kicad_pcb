@@ -189,6 +189,30 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0c8767e6-eede-49a5-abcf-d7a25ea103ac")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "1x05 pin header, 2.54 mm pitch, vertical THT (e.g. LCSC C492404)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2197cc75-32a7-4a9d-b7c4-a4189820ee95")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/830a8375-626b-4329-a22b-bfbed048ed8e")
 		(sheetname "/")
@@ -429,7 +453,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/resettable-ptc-rhef-datasheet?assetguid=5c5a29fe-1611-4d65-b4ce-dc979c44d206"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -459,6 +483,66 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d8290881-0508-4eff-b970-f481722c3738")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "RHEF200"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "96fa4cd8-e35a-4065-b065-f766f3e418ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.digikey.com/en/products/detail/littelfuse-inc/RHEF200/5130265"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a9c4b718-781a-4667-b9bc-0d24defa3a51")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "PPTC radial, IH 2.0 A / IT 3.8 A / 16 V max"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "eb8de053-b40a-440d-ba31-eaedc6ce7387")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint Note" "No Littelfuse RHEF footprint exists in the KiCad libraries. F1 uses the Bourns MF-RG300 land pattern: pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. RHEF200 leads are 0.51 mm dia at 5.05 +/-0.75 mm spacing, so they fit, but the Bourns part is a 3.0 A/5.1 A device and the drawn body outline is its, not the RHEF200's - do not trust the outline for clearance."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "fffa57d2-3770-41bb-b852-900631238ae6")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -651,7 +735,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.usb.org/sites/default/files/documents/usb_type-c.zip"
+		(property "Datasheet" "https://gct.co/files/drawings/usb4970.pdf"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -670,6 +754,66 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "51452620-64e0-46a2-8d4d-35d9c8cd1acf")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "GCT"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "762a55ce-ec7b-4913-8343-3b935f7880e3")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "USB4970-00-A"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5101421f-7bf9-4902-b6b9-7257dd4f84d7")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.digikey.com/en/products/detail/gct/USB4970-00-A/28722813"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b89fccba-f4eb-4769-adfe-1885382b0d91")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bc460fd5-cc0c-448c-bf68-90843612c33c")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Footprint Note" "KiCad has no USB4970 footprint. GCT's USB4970 drawing specifies the same recommended layout as the USB4125: pad centres 1.00/3.04/5.50 mm, widths 0.70/0.76/0.80 mm x 1.20 mm, shell holes 8.64 x 3.80 mm apart, 1.10 x 1.70 mm with 0.60 x 1.20 mm slots. Verified against the drawing 2026-08-28. USB4970-00-A takes the 1.00 mm shell stake, so the plain USB4125-xx-x footprint is the match; -0190 is the 1.90 mm stake variant."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e8b68e06-314c-4a7d-80e1-8b70e57ebea8")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -927,12 +1071,36 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "test point"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "876861c8-faab-4ede-b6cb-4de61731eaee")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Not a purchased part"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ffaef768-ba9f-47b9-97c5-f02126e550e3")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "Bare plated through-hole pad, 2.0 mm pad / 1.0 mm drill"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d351ef58-ef4e-40b0-b040-d2d8e49f0958")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1047,6 +1215,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f362dee4-6964-4892-b9b0-89416d8d5531")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "220 Ohm +/-5%, >=0.25 W, axial THT, 7.62 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7d956bde-25e2-43de-9282-fc86666bf911")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -1237,7 +1429,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C49678.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -1248,7 +1440,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Unpolarized capacitor"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -1267,6 +1459,66 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3bf086dc-3a2e-4a88-ac88-c554c60d0fa2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "CC0805KRX7R9BB104"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8c7dc5fe-f010-4b7c-8ca5-4b619d047c1b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C49678"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "533483e2-1880-4ac4-a106-77c76b1fe5de")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C49678.html"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3a662be0-1cd3-4ccc-ab80-93936d4aea54")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "100 nF +/-10%, 50 V, X7R, 0805 (any equivalent >=16 V X7R)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bebde53f-dd0d-499c-9017-a2b3973e04fb")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -1384,7 +1636,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.in/datasheet/3/144/1/pjran1x1u__x_series_cd.pdf"
+		(property "Datasheet" "https://www.switchcraft.com/assets/1/24/PJRAN1X1U__X_SERIES_CD.PDF"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -1432,7 +1684,7 @@
 				)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
+		(property "Mouser Price/Stock" "https://www.mouser.com/en/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -1445,28 +1697,38 @@
 				)
 			)
 		)
-		(property "Manufacturer_Name" "Switchcraft"
-			(at 0 0 180)
-			(unlocked yes)
+		(property "Manufacturer" "Switchcraft"
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "85028eb2-c4e9-4aa5-9498-ed29ca67fd84")
+			(uuid "b69f37e6-32dd-4ec7-82c8-2783e33997e6")
 			(effects
 				(font
-					(size 1 1)
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "PJRAN1X1U03X"
-			(at 0 0 180)
-			(unlocked yes)
+		(property "MPN" "PJRAN1X1U03X"
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "51e8c992-cb54-4f9c-bc2e-6ab1c04024d1")
+			(uuid "b36ac5e9-9099-429f-a273-1001df662921")
 			(effects
 				(font
-					(size 1 1)
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.mouser.com/en/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4f48a07d-ba59-4bfd-8971-e76445c2c387")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -2003,12 +2265,36 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "test point"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "a4bb8899-8e9e-4354-8a82-1517abd1613d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Not a purchased part"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e2a34e9a-4d07-41c8-a129-90551c2a8a19")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "Bare plated through-hole pad, 2.0 mm pad / 1.0 mm drill"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "4c679f7e-6577-4f1d-a019-7892be027ca8")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2123,6 +2409,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a5639fe3-dc15-4ebd-87fc-fe347999c233")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "75 Ohm +/-1%, >=0.25 W, axial THT, 7.62 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b6d46d38-4486-4265-824d-85fbbbc9a296")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -2304,7 +2614,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps2553.pdf"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2317,12 +2627,60 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Adjustable current-limited power distribution switch, SOT-23-6"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "12fcb122-bd1e-470c-b80d-ffc8786d8a10")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a8e134fe-ab01-4e42-b10b-e688087e88ce")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "TPS2553DBVR"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "eaa47c86-6edb-4e6c-b1dd-f56fa317fb24")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C55266"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ddcf5729-aac6-46d5-89ea-2fa16d5ca41d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C55266.html"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bae4e52a-2841-4adb-b610-2ad546920a12")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2564,7 +2922,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "http://www.datasheetcatalog.org/datasheet/toshiba/905.pdf"
+		(property "Datasheet" "https://www.unisonic.com.tw/uploadfiles/836/part_no_pdf/2SA733.pdf"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2612,6 +2970,66 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "UTC (Unisonic)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "073b693b-6a85-4e35-990b-a2474442106b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "2SA733L-P-T92-B"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9d6ada6f-4ca3-411f-88ca-8e83946673d0")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C5310429"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "48b68eed-96e1-43c4-8a30-ca62334588c2")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C5310429.html"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0a9c05de-f333-4cfe-970e-62b274acf0fe")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "PNP TO-92, pin order E-C-B (collector in the middle) - datasheet ordering table, not a drawing. Rank P = hFE 200-400, matching the ~46 uA base current measured at ~9.3 mA emitter. VCEO -50 V, IC -150 mA, VEBO -5 V (same as the 2SA1015 it replaces, so R2 still guards the B-E junction), fT 190 MHz typ, Cob 2-3 pF. Schematic reuses the Transistor_BJT:2SA1015 symbol - same pinout family."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d46e04f7-67c2-4585-94f5-329547a9f74f")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -2852,6 +3270,30 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8288106f-4aae-4532-a488-ebab5951204e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "75 Ohm +/-1%, >=0.25 W, axial THT, 7.62 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5c1f6247-f550-4721-a0b2-a73bd93c7475")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/d7a17d52-153c-4032-b17b-b2bf3ec318e1")
 		(sheetname "/")
@@ -3049,7 +3491,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Resistor"
 			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
@@ -3068,6 +3510,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "252748ec-f2bf-4a1a-b44f-d5b6fb8c2871")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "330 Ohm +/-5%, >=0.25 W, axial THT, 7.62 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "391e862e-e5c1-43b3-b45e-0fa264738863")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -3276,6 +3742,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7036671a-7afa-4a10-90ab-90a313288d36")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "470 uF, >=16 V, aluminium electrolytic, radial, <=10 mm dia, 5.0 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d048b6a3-d0f4-4e2c-a1f1-040bfb18c69f")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -5372,6 +5862,30 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "58ee16b5-7a84-4019-9376-b2d5a775af10")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "5.1 kOhm +/-5%, >=0.1 W, axial THT, 7.62 mm pitch (USB-C CC pulldown Rd)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9c0e5aec-63ad-4dc5-875b-0178fe699c1e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/0a9fa0a3-3e8c-4e8d-9cf5-8c1caad60215")
 		(sheetname "/")
@@ -5559,7 +6073,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.in/datasheet/3/144/1/pjran1x1u__x_series_cd.pdf"
+		(property "Datasheet" "https://www.switchcraft.com/assets/1/24/PJRAN1X1U__X_SERIES_CD.PDF"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -5607,7 +6121,7 @@
 				)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
+		(property "Mouser Price/Stock" "https://www.mouser.com/en/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -5620,28 +6134,38 @@
 				)
 			)
 		)
-		(property "Manufacturer_Name" "Switchcraft"
-			(at 0 0 180)
-			(unlocked yes)
+		(property "Manufacturer" "Switchcraft"
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "93675769-88ef-4eff-8a08-5507e425a531")
+			(uuid "25444e5d-57fc-497f-bb36-637e409121dd")
 			(effects
 				(font
-					(size 1 1)
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
 		)
-		(property "Manufacturer_Part_Number" "PJRAN1X1U03X"
-			(at 0 0 180)
-			(unlocked yes)
+		(property "MPN" "PJRAN1X1U03X"
+			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "d92d3030-ebf2-48c3-83f2-45139350eaf9")
+			(uuid "11b99388-d0cf-4d8a-acbf-f02a47a82837")
 			(effects
 				(font
-					(size 1 1)
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.mouser.com/en/ProductDetail/Switchcraft/PJRAN1X1U03X?qs=mcPJWgAPNrc45bmxqO8nXw%3D%3D"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "55d6a563-6050-4585-aba0-9ac014f9fbfe")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -6165,7 +6689,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C17560.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -6176,7 +6700,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Resistor"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -6195,6 +6719,66 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6a3e0ec5-cf7f-403d-9600-d2d6bfe3041e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "0805W8F2202T5E"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "171431bc-b3c2-4fe1-b259-39a5949db3da")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C17560"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "cfe541ef-586e-4739-9745-b23478a902d8")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C17560.html"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "00da8d49-a836-4988-add2-d7b4b224ab30")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "22 kOhm +/-1%, 125 mW, 0805 - sets the eFuse current limit, keep 1%"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "84fc62d7-4bed-41ee-bf08-4cb91a527836")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -6341,6 +6925,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "403f1872-c7a0-4327-b1f5-bea35258ddbe")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "100 uF, >=16 V, aluminium electrolytic, radial, <=10 mm dia, 5.0 mm pitch"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7c05b35e-a0ac-4673-9aa3-bbc5ce4c3473")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -8416,12 +9024,36 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "test point"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "01b7b238-588d-4c64-907a-5209a77d07f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Not a purchased part"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c5d804f3-f083-4a3f-9974-48eeb821ee2d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "Bare plated through-hole pad, 2.0 mm pad / 1.0 mm drill"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6c742db3-d958-494f-9e4c-0e447168b31d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8519,12 +9151,36 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "test point"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "c81e4891-cbae-4565-9629-23dadd83c88e")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Not a purchased part"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6e1046cd-c94f-48f8-af06-8af5a85a65b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "Bare plated through-hole pad, 2.0 mm pad / 1.0 mm drill"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1a7f8e2a-15f4-470f-96ae-68a207286254")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8609,7 +9265,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.vishay.com/docs/88301/15ke.pdf"
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/littelfuse_tvs_diode_1_5ke_datasheet.pdf?assetguid=9d02c7d2-86a5-4bff-9251-966d6af02bf7"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -8639,6 +9295,54 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Littelfuse"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c4aa8ff1-82c6-4521-a369-65ea8364e980")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "MPN" "1.5KE6.8A"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "172575f0-c6a0-4bc4-8ccf-66c6e7f787af")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.digikey.com/en/products/detail/littelfuse-inc/1-5KE6-8A/285842"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0f0b9932-711b-4ffd-b4e0-efa0085f32aa")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "1500 W unidirectional TVS: VWM 5.8 V, VBR 6.45 V min, VC 10.5 V @ 144.8 A. Littelfuse packages it as DO-201AA/DO-27; the DO-201AE footprint takes it (15.24 mm pitch, 1.3 mm drills)."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5ec3c7ce-aea6-4e86-82af-f45b031f0f3e")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)
@@ -8919,6 +9623,30 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2b50dc36-9300-408c-a05b-50c211ebc1b3")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "5.1 kOhm +/-5%, >=0.1 W, axial THT, 7.62 mm pitch (USB-C CC pulldown Rd)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a92e3c49-3d9e-4352-b781-0a0d974a560d")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property ki_fp_filters "R_*")
 		(path "/70ab99f8-5e5d-472f-a145-907de52fcd55")
 		(sheetname "/")
@@ -9135,6 +9863,30 @@
 			(effects
 				(font
 					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Generic"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "efc684e2-fd2e-4d74-878e-a2b8f82b5ab0")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "1x03 pin header, 2.54 mm pitch, vertical THT (e.g. LCSC C2937625)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2389e020-4c4f-40c2-8545-491c129144f5")
+			(effects
+				(font
+					(size 1.27 1.27)
 					(thickness 0.15)
 				)
 			)

@@ -115,6 +115,17 @@ a failure mode that looks exactly like success. Files to copy:
 | every `*.kicad_sch` | schematic parity; hierarchical designs have several |
 | `<name>.kicad_pro` | DRC severities, which decide blocking vs cosmetic |
 | `<name>.kicad_dru` | custom rules, when present |
+| `fp-lib-table`, `sym-lib-table` | without them the footprint-vs-library checks cannot run |
+| `${KIPRJMOD}`-relative libraries | a copied table pointing at an uncopied library is worse than no table |
+
+**The library tables were added after measurement, not by reasoning.** Staging
+without them was run against the real project and invented two
+`lib_footprint_issues` findings that do not exist: kicad-cli reported the
+missing `nes1` library as a finding of its own. They were cosmetic here, so the
+verdict held — but a project that raises that check to error would have had a
+good board blocked by its own staging. With the tables and their
+project-local libraries copied, the staged verdict matches the in-place CLI
+verdict exactly, which is the actual acceptance criterion.
 
 `kicad-cli pcb drc` derives the schematic from the board's basename, so the
 copy must keep the original filenames.

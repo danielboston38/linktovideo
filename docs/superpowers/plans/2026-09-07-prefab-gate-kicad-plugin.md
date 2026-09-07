@@ -15,7 +15,7 @@
 - **Stdlib only.** KiCad's bundled Python cannot `pip install`. No third-party imports anywhere in shipped code.
 - **The plugin changes nothing without explicitly asking.** It never writes to the user's project. Check only; no packaging from the GUI.
 - **Never run against the open board.** DRC uses `--refill-zones --save-board` and would rewrite the file under the editor. Always stage a copy.
-- **The staged copy is a four-file whitelist:** `<name>.kicad_pcb`, every `*.kicad_sch` in the project directory, `<name>.kicad_pro`, `<name>.kicad_dru`. Never the whole directory.
+- **The staged copy is a whitelist:** `<name>.kicad_pcb`, every `*.kicad_sch`, `<name>.kicad_pro`, `<name>.kicad_dru`, `fp-lib-table`, `sym-lib-table`, and any `${KIPRJMOD}`-relative library those tables name. Never the whole directory. The library tables were added after measurement — without them the staged run invented two `lib_footprint_issues` findings.
 - **Basenames must be preserved when staging.** `kicad-cli pcb drc` derives the schematic from the board's basename and has no flag to override it.
 - **One implementation of the policy.** Blocking-vs-cosmetic decisions live in `gate/`; the plugin consumes them.
 - **Tests are stdlib `unittest`, no pytest.** Run with:

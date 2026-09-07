@@ -8,9 +8,8 @@ A replacement for the RF modulator in the original Nintendo Entertainment System
 
 > **Renamed.** This project shipped its first revision as **Kirby's New Dream**.
 > From v2 onward it is **Link to Video**. Anything referring to the old name —
-> the v1 board silkscreen, the 2026-07-16 PCBWay fab package under
-> [`pcbway_production/`](./pcbway_production), and older commits — is the same
-> project. The GitHub repository was renamed to match; the previous
+> the v1 board silkscreen, the 2026-07-16 PCBWay fab package, and older commits
+> — is the same project. The GitHub repository was renamed to match; the previous
 > `kirbysnewdream` URL still redirects.
 
 ## Why this board exists
@@ -310,6 +309,11 @@ the package always describes the board that was actually verified — recorded i
 `manifest.json` alongside every finding, including the cosmetic ones it waived.
 
 Run `check` instead of `package` to get the verdict without writing files.
+
+`pcbway_production/` is not tracked — packages are reproducible from the board,
+and the two that were actually fabbed remain in git history at the 2026-07-07
+and 2026-07-16 commits. Generate a fresh one when you order rather than reaching
+for an old directory, so the gate re-verifies the board you are about to pay for.
 
 ## Assembly
 

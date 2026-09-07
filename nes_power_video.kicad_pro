@@ -572,6 +572,14 @@
       {
         "netclass": "Power",
         "pattern": "VBUS"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/raw_5v"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "/fused_5v"
       }
     ]
   },

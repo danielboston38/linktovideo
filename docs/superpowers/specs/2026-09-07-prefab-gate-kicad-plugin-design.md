@@ -1,7 +1,9 @@
 # prefab-gate as a KiCad plugin
 
 **Date:** 2026-09-07
-**Status:** approved, not yet implemented
+**Status:** implemented and verified in KiCad 10.0.6; shipped at
+[danielboston38/prefab-gate](https://github.com/danielboston38/prefab-gate).
+Only the PCM registry submission (Task 8 of the implementation plan) remains.
 
 ## Why
 

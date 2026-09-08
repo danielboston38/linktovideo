@@ -57,7 +57,7 @@
 - Consumes: nothing.
 - Produces: `StagingError(Exception)`; `collect(board_path: str) -> list[str]` (absolute paths, board first); `stage(board_path: str, dest: str) -> str` (returns staged board path).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 """Staging picks the files DRC needs and nothing else."""
@@ -177,12 +177,12 @@ if __name__ == "__main__":
     unittest.main()
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin'`
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 ```python
 """Assemble the smallest project copy kicad-cli DRC needs.
@@ -251,17 +251,17 @@ def stage(board_path, dest):
     return os.path.join(dest, os.path.basename(files[0]))
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_staging.py' -v`
 Expected: PASS, 10 tests
 
-- [ ] **Step 5: Run the whole suite to confirm nothing regressed**
+- [x] **Step 5: Run the whole suite to confirm nothing regressed**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_*.py'`
 Expected: PASS, 192 tests
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add prefab-gate/kicad/plugin/staging.py prefab-gate/tests/test_staging.py
@@ -296,7 +296,7 @@ Under `--json` the gate writes only the verdict to stdout and every other messag
 
 Stale zone fills are detected by hashing the staged board before and after, **not** by matching the gate's note. The gate itself refuses to key on message wording, and its note says "should be committed" while naming a temp path — true for the CLI, nonsense in a dialog.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 """The runner adapts the gate's CLI contract for the GUI."""
@@ -392,12 +392,12 @@ if __name__ == "__main__":
     unittest.main()
 ```
 
-- [ ] **Step 2: Run the tests to verify they fail**
+- [x] **Step 2: Run the tests to verify they fail**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'plugin.runner'`
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 ```python
 """Run the gate against a staged copy and return something a dialog can render.
@@ -484,17 +484,17 @@ def run_check(board_path, main=None, hasher=None):
                   messages=err.getvalue().strip(), zones_were_stale=stale)
 ```
 
-- [ ] **Step 4: Run the tests to verify they pass**
+- [x] **Step 4: Run the tests to verify they pass**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_runner.py' -v`
 Expected: PASS, 7 tests
 
-- [ ] **Step 5: Run the whole suite**
+- [x] **Step 5: Run the whole suite**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_*.py'`
 Expected: PASS, 199 tests
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add prefab-gate/kicad/plugin/runner.py prefab-gate/tests/test_runner.py
@@ -525,7 +525,7 @@ a dialog."
 
 `summarise` is deliberately separated from the wx code so the wording can be read and changed without KiCad. The dialog itself is left untested; it is kept thin enough that manual smoke testing is honest coverage.
 
-- [ ] **Step 1: Write `action.py`**
+- [x] **Step 1: Write `action.py`**
 
 ```python
 """The toolbar button. Rendering only — no policy lives here."""
@@ -614,7 +614,7 @@ class PrefabGateAction(pcbnew.ActionPlugin):
         dialog.Destroy()
 ```
 
-- [ ] **Step 2: Write `__init__.py`**
+- [x] **Step 2: Write `__init__.py`**
 
 ```python
 """Register the action with pcbnew when running inside KiCad.
@@ -634,12 +634,12 @@ else:
     PrefabGateAction().register()
 ```
 
-- [ ] **Step 3: Verify the tested modules still import without KiCad**
+- [x] **Step 3: Verify the tested modules still import without KiCad**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_*.py'`
 Expected: PASS, 199 tests — proving `__init__.py` does not drag in `pcbnew`
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add prefab-gate/kicad/plugin/action.py prefab-gate/kicad/plugin/__init__.py
@@ -667,7 +667,7 @@ raises rather than vanishing behind a bare except."
 
 Both are required: 64×64 for the PCM listing, 24×24 for the pcbnew toolbar. Written with stdlib `zlib` + `struct` so no image library is needed.
 
-- [ ] **Step 1: Write the generator and produce both files**
+- [x] **Step 1: Write the generator and produce both files**
 
 ```python
 # prefab-gate/kicad/make_icons.py
@@ -731,7 +731,7 @@ if __name__ == "__main__":
     print("wrote icon.png (64) and plugin/icon24.png (24)")
 ```
 
-- [ ] **Step 2: Run it and verify the dimensions**
+- [x] **Step 2: Run it and verify the dimensions**
 
 ```bash
 cd prefab-gate/kicad && python3 make_icons.py
@@ -745,7 +745,7 @@ for p, want in (('icon.png', 64), ('plugin/icon24.png', 24)):
 ```
 Expected: `icon.png: 64x64 OK` and `plugin/icon24.png: 24x24 OK`
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add prefab-gate/kicad/make_icons.py prefab-gate/kicad/icon.png prefab-gate/kicad/plugin/icon24.png
@@ -770,7 +770,7 @@ image library KiCad's bundled Python cannot install."
 - Consumes: everything from Tasks 1–4.
 - Produces: `build(repo_root, out_dir) -> (archive_path, submission_metadata_dict)`.
 
-- [ ] **Step 1: Write `metadata.json`**
+- [x] **Step 1: Write `metadata.json`**
 
 `download_*` fields are deliberately absent — the spec forbids them inside the archive; `build_pcm.py` adds them to the submission copy only.
 
@@ -803,7 +803,7 @@ image library KiCad's bundled Python cannot install."
 }
 ```
 
-- [ ] **Step 2: Write the failing tests**
+- [x] **Step 2: Write the failing tests**
 
 ```python
 """The archive must match KiCad's PCM layout exactly."""
@@ -881,12 +881,12 @@ if __name__ == "__main__":
     unittest.main()
 ```
 
-- [ ] **Step 3: Run the tests to verify they fail**
+- [x] **Step 3: Run the tests to verify they fail**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: FAIL — `ModuleNotFoundError: No module named 'build_pcm'`
 
-- [ ] **Step 4: Write `build_pcm.py`**
+- [x] **Step 4: Write `build_pcm.py`**
 
 ```python
 """Build the PCM archive and the metadata that describes it.
@@ -964,24 +964,24 @@ if __name__ == "__main__":
     print("Set download_url to the release asset URL before submitting.")
 ```
 
-- [ ] **Step 5: Run the tests to verify they pass**
+- [x] **Step 5: Run the tests to verify they pass**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_build_pcm.py' -v`
 Expected: PASS, 9 tests
 
-- [ ] **Step 6: Build the archive and check its size**
+- [x] **Step 6: Build the archive and check its size**
 
 ```bash
 cd prefab-gate/kicad && python3 build_pcm.py && ls -lh ../dist/
 ```
 Expected: an archive well under 1 MB — the whole point of not shipping the hardware repo
 
-- [ ] **Step 7: Run the whole suite**
+- [x] **Step 7: Run the whole suite**
 
 Run: `cd prefab-gate/scripts && PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_*.py'`
 Expected: PASS, 208 tests
 
-- [ ] **Step 8: Add `dist/` to the ignore list and commit**
+- [x] **Step 8: Add `dist/` to the ignore list and commit**
 
 ```bash
 echo "dist/" >> prefab-gate/.gitignore
@@ -1005,32 +1005,32 @@ a test asserts their absence."
 
 This is the only coverage the wx layer gets, so it is a task rather than a footnote.
 
-- [ ] **Step 1: Install the archive**
+- [x] **Step 1: Install the archive**
 
 KiCad → Plugin and Content Manager → *Install from File* → `prefab-gate/dist/prefab-gate-0.1.0-pcm.zip`
 
-- [ ] **Step 2: Confirm the gate package survived the install**
+- [x] **Step 2: Confirm the gate package survived the install**
 
 Check that `plugins/gate/` is present in the installed plugin directory and was not flattened.
 
 This is expected to pass and is no longer a design risk: the official repository's InteractiveHtmlBom ships `plugins/` with five subdirectories, including nested packages (`plugins/ecad/kicad_extra/__init__.py`) and assets three levels deep. The documentation's "no subdirectories" means "do not wrap your plugin in an extra folder". Verify anyway — it costs one `ls`.
 
-- [ ] **Step 3: Run it against the NES board**
+- [x] **Step 3: Run it against the NES board**
 
 Open `nes_power_video.kicad_pcb`, click the toolbar button. Expected: PASSED, 0 blocking, 6 cosmetic silkscreen findings on J2/J3, and the dialog naming the board path and its last-saved time.
 
-- [ ] **Step 4: Confirm it wrote nothing**
+- [x] **Step 4: Confirm it wrote nothing**
 
 ```bash
 cd ~/nes_power_video && git status --short
 ```
 Expected: no modification to `nes_power_video.kicad_pcb`. **This is the plugin's central promise; if the board is dirty, stop.**
 
-- [ ] **Step 5: Check the unsaved-board path**
+- [x] **Step 5: Check the unsaved-board path**
 
 File → New Board, click the button without saving. Expected: the "This board has not been saved yet" message, not a traceback.
 
-- [ ] **Step 6: Record the result**
+- [x] **Step 6: Record the result**
 
 ```bash
 git commit --allow-empty -m "test(kicad-plugin): verified against KiCad 10.0.6
@@ -1049,11 +1049,11 @@ documentation's 'no subdirectories' wording left ambiguous."
 
 Everything above is local and reversible. This task creates a public repository and is not.
 
-- [ ] **Step 1: Ask before doing anything**
+- [x] **Step 1: Ask before doing anything**
 
 Confirm with the user: the repository name (`prefab-gate`), and **public or private**. Do not create it on assumption.
 
-- [ ] **Step 2: Split the history**
+- [x] **Step 2: Split the history**
 
 ```bash
 cd ~/nes_power_video
@@ -1061,7 +1061,7 @@ git subtree split --prefix=prefab-gate -b prefab-gate-export
 git log --oneline prefab-gate-export | wc -l   # sanity: many commits, not one
 ```
 
-- [ ] **Step 3: Create and push**
+- [x] **Step 3: Create and push**
 
 ```bash
 gh repo create prefab-gate --<public|private> \
@@ -1069,7 +1069,7 @@ gh repo create prefab-gate --<public|private> \
 git push git@github.com:danielboston38/prefab-gate.git prefab-gate-export:main
 ```
 
-- [ ] **Step 4: Verify the tests pass from a clean clone**
+- [x] **Step 4: Verify the tests pass from a clean clone**
 
 ```bash
 cd $(mktemp -d) && git clone git@github.com:danielboston38/prefab-gate.git && cd prefab-gate/scripts
@@ -1077,7 +1077,7 @@ PYTHONPATH=. python3 -m unittest discover -s ../tests -p 'test_*.py'
 ```
 Expected: PASS, 208 tests. A green suite in a fresh clone is what proves the split is complete.
 
-- [ ] **Step 5: Update the board repo**
+- [x] **Step 5: Update the board repo**
 
 Remove `prefab-gate/`, point `.claude-plugin/marketplace.json` at the new repo, and rewrite the README's `python3 prefab-gate/scripts/prefab_gate.py` invocations to use `prefab_gate` on PATH. Commit.
 

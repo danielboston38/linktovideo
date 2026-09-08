@@ -69,3 +69,10 @@ prefab_gate_review.md
 
 # Stray npm lockfile — nothing in this repo is a node package.
 package-lock.json
+
+# Freerouting / DFM tooling scratch output
+*.dsn
+*.ses
+dfm/
+output.json
+package.json

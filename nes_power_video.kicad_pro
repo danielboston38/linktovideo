@@ -273,20 +273,7 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [
-      [
-        "pin_not_connected|1079500|1879600|df35589e-7346-41df-9db7-ca5d6f1ab804|00000000-0000-0000-0000-000000000000|/467ff530-bd7b-4486-a282-e5127feecbd3|/467ff530-bd7b-4486-a282-e5127feecbd3|",
-        "J4 pin 4 is a deliberately unused redundant GND pin on the 5-pin console header -- pin 5 carries the real GND connection. Verified genuinely floating in the netlist (unconnected-(J4-Pin_4-Pad4)), so the exclusion is correct. A real no_connect flag would be the cleaner fix but was not added here to avoid placing schematic geometry from an unverified coordinate transform."
-      ],
-      [
-        "pin_not_connected|1282700|1587500|42f908a6-2ad1-4737-b862-4e6fa003d5e6|00000000-0000-0000-0000-000000000000|/467ff530-bd7b-4486-a282-e5127feecbd3|/467ff530-bd7b-4486-a282-e5127feecbd3|",
-        "USB-C1 CC1 (pin A5) IS connected -- to R4 pin 1, its 5.1k pulldown -- verified against kicad-cli's own netlist export twice (2026-09-07, 2026-09-08). ERC's pin_not_connected check appears to flag this pin regardless of the real connection; the exclusion is a correct dismissal of a false positive, not a real gap."
-      ],
-      [
-        "pin_not_connected|1282700|1612900|12eaf071-6604-434a-9834-b6b5ab484cb7|00000000-0000-0000-0000-000000000000|/467ff530-bd7b-4486-a282-e5127feecbd3|/467ff530-bd7b-4486-a282-e5127feecbd3|",
-        "USB-C1 CC2 (pin B5) IS connected -- to R3 pin 1, its 5.1k pulldown -- same false-positive pattern as CC1/A5 above, same verification."
-      ]
-    ],
+    "erc_exclusions": [],
     "meta": {
       "version": 0
     },

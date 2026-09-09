@@ -15,8 +15,13 @@ python3 run_all.py
 ```
 
 Python 3.10+, standard library only. Runtime is about two minutes; ngspice must be on
-`PATH`. Output is five sections matching the advisory. Generated `.cir` decks are left
-in a temp directory (path printed at the end) for inspection.
+`PATH`. Output is five sections matching the advisory.
+
+Every ngspice deck is kept, under `./vbus_sim_decks/` (override with `--decks DIR`).
+There are ~394 of them, about 7 MB. They are named so the deck behind any published
+figure can be found directly — `012_steady_asfabbed_2.000A.cir` is the 105 °C headline,
+and the `damage_asfabbed_130C_*.cir` series shows the search converging on 2.22 A. The
+directory is gitignored; delete it with `rm -rf vbus_sim_decks`.
 
 ## What's here
 

@@ -76,3 +76,6 @@ package-lock.json
 dfm/
 output.json
 package.json
+
+# ngspice decks emitted by sim/vbus-trace-ampacity/run_all.py
+vbus_sim_decks/

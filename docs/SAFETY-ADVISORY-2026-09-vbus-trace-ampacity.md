@@ -234,16 +234,44 @@ fab packages — the boards as actually manufactured, not the KiCad source.
 
 **Conservatism.** The IPC-2221 calibration takes no credit for the B.Cu ground pour
 1.51 mm below the trace, so the temperatures above are pessimistic. A sensitivity sweep
-was run scaling thermal resistance down to credit that plane: the conclusion holds until
-the plane is assumed to halve thermal resistance, and even at that optimistic extreme the
-charring threshold only just reaches F1's 3.8 A trip current — zero margin. **Under every
-assumption tested, the trace exceeds FR4's glass transition before the fuse is guaranteed
-to act.**
+was run scaling thermal resistance down to credit that plane:
+
+| Thermal resistance | Exceeds FR4 Tg | Chars |
+|---|---|---|
+| calibrated (no plane credit) | 2.22 A | 2.83 A |
+| 80 % | 2.44 A | 3.12 A |
+| 65 % | 2.67 A | 3.41 A |
+| 50 % | 2.93 A | 3.75 A |
+| 40 % (very generous) | 2.95 A | 3.76 A |
+
+Even crediting the plane with a 60 % reduction in thermal resistance, the charring
+threshold asymptotes at **3.76 A — still below F1's 3.8 A guaranteed trip current**.
+**Under every assumption tested, the trace is damaged before the fuse is guaranteed to
+act.**
 
 **Limits.** Above roughly 300 °C the model is qualitative only — FR4 decomposes and the
 thermal parameters stop being valid. Treat runaway figures as "destructive", not as
 temperatures. The carbon-tracking secondary effect is reasoned from clearance geometry,
 not simulated, and is the least certain claim here.
+
+---
+
+## Reproducing this yourself
+
+The full simulation harness is published in
+[`sim/vbus-trace-ampacity/`](../sim/vbus-trace-ampacity/):
+
+```bash
+brew install ngspice        # or: apt install ngspice
+python3 sim/vbus-trace-ampacity/run_all.py
+```
+
+It regenerates every number quoted above, including the validation checks and the
+sensitivity sweep. The harness README documents the model, its provenance, and — more
+usefully — a list of the assumptions most worth attacking if you want to falsify this.
+
+Independent review is welcome and actively wanted. Please open an issue if any of it
+does not hold up.
 
 ---
 

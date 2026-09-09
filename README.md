@@ -6,6 +6,18 @@ A replacement for the RF modulator in the original Nintendo Entertainment System
   <img src="./certification-mark-US002842-stacked.svg" alt="OSHWA Certified Open Source Hardware UID US002842" width="140" align="right">
 </a>
 
+> [!CAUTION]
+> **Safety advisory for anyone who built this board before 2026-09-08.**
+> On every board ever fabricated, the USB-C VBUS input reaches F1 through 9.06 mm of
+> 0.2 mm-wide trace. That trace is damaged well below the current at which F1 is
+> guaranteed to trip, so **the fuse cannot protect the board's own input trace** under a
+> downstream fault. Normal operation is unaffected (48 °C, 17 mV drop) — this is a
+> fault-tolerance defect, not a wear-out defect, and a working board will keep working.
+> Fixed in [`247334c`](../../commit/247334c). Affected boards can be reworked in about
+> fifteen minutes.
+>
+> **→ Read the full advisory: [docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md](docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md)**
+
 > **Renamed.** This project shipped its first revision as **Kirby's New Dream**.
 > From v2 onward it is **Link to Video**. Anything referring to the old name —
 > the v1 board silkscreen, the 2026-07-16 PCBWay fab package, and older commits
@@ -235,6 +247,18 @@ state risks another transistor, which is the likely fate of the first one.
 - F1 (polyfuse) footprint field in KiCad is mislabeled as a polarized capacitor footprint despite correct value — cosmetic/documentation issue only, does not affect function. Fix planned for v2.
 - Video/audio RCA jack mounting holes are slightly asymmetric — cosmetic only, doesn't affect NES shell fit.
 - v1 silkscreen doesn't include component value labels or Q1 pin markers (E/C/B). **Values are on the silkscreen from v2.** On v1 this caused three separate wrong-resistor errors in R1 (a 5.1kΩ and an 820Ω both fitted before the right value went in) because R1/R3/R4/R5/R7 share one footprint across four values. Q1 pin markers are still outstanding.
+- **VBUS input trace is undersized for its own fuse (all fabbed boards).** `/raw_5v`
+  reaches F1 through 9.06 mm of 0.2 mm trace. It exceeds FR4's glass transition at
+  2.22 A and chars at 2.83 A, while F1 (RHEF200) is guaranteed not to trip below 2.0 A
+  and only guaranteed to trip above 3.8 A — so there is a 2.2–3.8 A window where the
+  trace is destroyed and the fuse may never act. Root cause was a netclass pattern gap:
+  the `Power` class (0.8 mm) was assigned by the patterns `/5V*`, `GND*`, `VBUS`, none
+  of which match the net's actual name `/raw_5v`, so it fell through to `Default`
+  (0.2 mm). DRC cannot catch this — it enforces the board `min_track_width` (0.2 mm),
+  not the netclass width. Fixed in `247334c` by correcting the pattern and rerouting to
+  0.8 mm. **Existing boards need a rework** — see
+  [the safety advisory](docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md).
+
 - **D1 does not protect U1.** The fitted TVS is a Littelfuse 1.5KE6.8A: stand-off 5.80 V, breakdown 6.45–7.14 V at 10 mA, clamping 10.5 V at 144.8 A. The TPS2553's absolute maximum on IN and OUT is 7 V, so the TVS has barely begun conducting by the time the eFuse is already out of spec, and under a real surge it lets the rail reach 10.5 V. D1 protects the console downstream; it will not save U1. Repositioning D1 doesn't help — both U1 pins share the same 7 V rating — and no avalanche TVS clamps below 7 V while standing off USB-C's 5.5 V worst case. Proper protection needs a switch with integrated overvoltage cutoff. Deferred to v3 — v2 ships with this gap.
 - D1's symbol (`Diode:1.5KExxA`) names both pins A1/A2 and draws no cathode — KiCad uses identical pin naming for the unidirectional and bidirectional variants of this part. Polarity comes only from the footprint silkscreen band, which is at the pad-1 (+5 V) end and is correct. Watch this when hand-assembling.
 

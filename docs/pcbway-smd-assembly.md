@@ -35,15 +35,15 @@ reflow them with the SMD pass.**
 
 ## Sourcing
 
-PCBWay turnkey sources by MPN from wherever they can. Two of the four lines
-need steering — checked 2026-09-07:
+PCBWay turnkey sources by MPN from wherever they can. All four SMD lines are
+now LCSC parts — checked 2026-09-09:
 
 | Ref | MPN | Status |
 |---|---|---|
 | C3 | `CC0805KRX7R9BB104` | LCSC C49678 — basic part, 7.2 M in stock, $0.015 |
 | R6 | `0805W8F2202T5E` | LCSC C17560 — basic part, 449 k in stock, $0.0035 |
 | **U1** | `TPS2553DBVR` | **DigiKey 0, Mouser 0 (112-day factory lead). LCSC C55266 has 44 k @ $0.298 — insist on LCSC.** |
-| **USB-C1** | `USB4970-00-A` | **Not an LCSC part.** DigiKey 5,956 cut-tape @ $0.32; T&R 4,000 @ MOQ 1,000. The one line PCBWay must buy in the West. |
+| **USB-C1** | `USB4125-GF-A-0190` | LCSC C5246813 — ~630–3,670 in stock, MOQ 1, $0.85. **From v2 this replaces the `USB4970-00-A`, which LCSC does not stock**; the USB4125 is a different GCT line number that LCSC carries, and the board was already laid out to its land pattern. Stock is thin, so tell them to buy spares. |
 
 U1 is the one that can quietly wreck a schedule. It is a live, in-production TI
 part, but Western distribution is empty right now and the factory lead is close

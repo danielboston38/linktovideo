@@ -453,7 +453,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.littelfuse.com/assetdocs/resettable-ptc-rhef-datasheet?assetguid=5c5a29fe-1611-4d65-b4ce-dc979c44d206"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C369104.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -487,7 +487,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Littelfuse"
+		(property "Manufacturer" "Jinrui (ShenZhen JinRui Electronic Material)"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -499,7 +499,7 @@
 				)
 			)
 		)
-		(property "MPN" "RHEF200"
+		(property "MPN" "JK30-200"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -511,7 +511,19 @@
 				)
 			)
 		)
-		(property "Supplier Link" "https://www.digikey.com/en/products/detail/littelfuse-inc/RHEF200/5130265"
+		(property "BOM Comments" "Replaces Littelfuse RHEF200, which LCSC does not stock. IH 2.0 A unchanged; IT rises 3.8 A -> 4.0 A; resistance improves slightly (Rmin 40 / R1max 100 mOhm vs the RHEF200's 45/110), so marginally less drop on the 5 V rail. Imax drops 100 A -> 40 A: that is the maximum fault current the device can interrupt, and a USB-C source limited to ~3 A never approaches it. CHECK HEIGHT BEFORE ORDERING: B(max) is 15.2 mm against the RHEF200's ~9-10 mm, and radial PPTCs stand vertically, so this is ~5-6 mm more height above the board inside the NES shell. F1 sits 7.2 mm from the top board edge. Sourcing checked 2026-09-09: 5,800 in stock, MOQ 10, multiple 10, $0.063 at qty 10. NOT the JKSEMI JK16-200T (C5183874): LCSC lists that part as Through Hole P=5.1mm, but its own datasheet is headed 'JK16 Series Surface Mount PTC Devices' and LCSC has no land pattern drawn for it, so its package could not be confirmed - do not substitute it without checking the mechanical drawing."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "09a6ba81-547b-4ef1-9668-85bff3061695")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C369104.html"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -523,7 +535,19 @@
 				)
 			)
 		)
-		(property "Spec" "PPTC radial, IH 2.0 A / IT 3.8 A / 16 V max"
+		(property "LCSC" "C369104"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f678ced4-fee8-4915-b323-2cbbc638a412")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "PPTC radial leaded, IH 2.0 A / IT 4.0 A / 30 V max / Imax 40 A, Rmin 40 mOhm, R1max 100 mOhm, trip 11 s max, 5.1 mm lead pitch, 0.5 mm (24AWG) leads, 3.0 mm body thickness, 15.2 mm max height"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -535,7 +559,7 @@
 				)
 			)
 		)
-		(property "Footprint Note" "No Littelfuse RHEF footprint exists in the KiCad libraries. F1 uses the Bourns MF-RG300 land pattern: pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. RHEF200 leads are 0.51 mm dia at 5.05 +/-0.75 mm spacing, so they fit, but the Bourns part is a 3.0 A/5.1 A device and the drawn body outline is its, not the RHEF200's - do not trust the outline for clearance."
+		(property "Footprint Note" "No JK30 footprint exists in the KiCad libraries. F1 uses the Bourns MF-RG300 land pattern: pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. Confirmed against the JK30 datasheet: the series is radial leaded, D(typ) lead spacing is 5.1 mm and leads are tinned 24AWG / 0.5 mm dia across the whole family, so they seat in the 1.01 mm drills with the same slight splay onto the diagonal pad pair that the RHEF200 needed. C(max) body thickness is 3.0 mm, matching the footprint's 3.0 mm in-plane depth. The silkscreen outline is still the Bourns 3.0 A/5.1 A body, not this part's - do not use it for clearance."
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -705,11 +729,11 @@
 			)
 		)
 	)
-	(footprint "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal"
+	(footprint "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal"
 		(layer "F.Cu")
 		(uuid "28987431-6581-4a17-9ffe-5dcdbbd2153d")
 		(at 49.4 22.4 180)
-		(descr "USB Type C Receptacle, GCT, power-only, 6P, top mounted, horizontal, 3A, 1mm stake: https://gct.co/files/drawings/usb4125.pdf")
+		(descr "USB Type C Receptacle, GCT, power-only, 6P, top mounted, horizontal, 3A, 1.9mm stake: https://gct.co/files/drawings/usb4125.pdf")
 		(tags "USB C Type-C receptacle power-only charging-only 6P 6C right angled")
 		(property "Reference" "USB-C1"
 			(at 0 -5.1 180)
@@ -723,7 +747,7 @@
 				)
 			)
 		)
-		(property "Value" "USB4970-00-A"
+		(property "Value" "USB4125-GF-A-0190"
 			(at 0 4.725 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -735,7 +759,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/usb4970.pdf"
+		(property "Datasheet" "https://gct.co/files/drawings/usb4125.pdf"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -761,7 +785,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "Global Connector Technology (GCT)"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -773,7 +797,7 @@
 				)
 			)
 		)
-		(property "MPN" "USB4970-00-A"
+		(property "MPN" "USB4125-GF-A-0190"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -785,7 +809,19 @@
 				)
 			)
 		)
-		(property "Supplier Link" "https://www.digikey.com/en/products/detail/gct/USB4970-00-A/28722813"
+		(property "BOM Comments" "Replaces GCT USB4970-00-A, which LCSC does not stock - an MPN search will always come up empty. The USB4125 is a different GCT line number that LCSC does carry, and the board was already laid out to its land pattern. Stock is thin (~600-3,700 depending on source) next to the generic Chinese 6P parts, so order spares. Plain 1.00 mm stake variant is C3151650 if the -0190 is out."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3f206328-99d5-4031-9015-0e34a06015ba")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C5246813.html"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -797,7 +833,19 @@
 				)
 			)
 		)
-		(property "Spec" "USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2)"
+		(property "LCSC" "C5246813"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ded2239b-1dd7-43cd-b42b-edbfdc78225b")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Spec" "USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2), 48 V / 3 A, 20,000 mating cycles, 1.90 mm shell stake"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -809,7 +857,7 @@
 				)
 			)
 		)
-		(property "Footprint Note" "KiCad has no USB4970 footprint. GCT's USB4970 drawing specifies the same recommended layout as the USB4125: pad centres 1.00/3.04/5.50 mm, widths 0.70/0.76/0.80 mm x 1.20 mm, shell holes 8.64 x 3.80 mm apart, 1.10 x 1.70 mm with 0.60 x 1.20 mm slots. Verified against the drawing 2026-08-28. USB4970-00-A takes the 1.00 mm shell stake, so the plain USB4125-xx-x footprint is the match; -0190 is the 1.90 mm stake variant."
+		(property "Footprint Note" "Exact KiCad footprint for this MPN. USB_C_Receptacle_GCT_USB4125-xx-x-0190 is byte-identical in copper, silk, fab, courtyard and drills to the plain USB4125-xx-x land pattern the board was laid out with - only the name, descr and 3D model differ - so this is a naming correction, not a layout change. The -0190 suffix is the 1.90 mm shell stake, which protrudes 0.30 mm through a 1.6 mm board and gives a bottom-side fillet; the 1.00 mm stake (plain USB4125-GF-A, LCSC C3151650) does not reach through."
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -1018,7 +1066,7 @@
 			(uuid "22fe0f11-b993-46f5-9c0c-20b4afc4bff1")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal.step"
+		(model "${KICAD10_3DMODEL_DIR}/Connector_USB.3dshapes/USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -9324,11 +9372,35 @@
 				)
 			)
 		)
+		(property "BOM Comments" "LCSC stock of the 1.5KE6.8A is DOWO-branded (C294199, DO-201, MOQ 5): VWM 5.8 V, VBR 6.46 V, VC 10.5 V @ 142.86 A - equivalent to the Littelfuse figures this design was characterised against, so every conclusion in the README still holds, including the finding that D1 does not protect U1. Manufacturer/MPN fields still name Littelfuse because that is the part actually fitted on v1 and the one the DigiKey supplier link points at; 1.5KE6.8A is a generic type number, not a Littelfuse-only MPN. Order either."
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "af5c8a02-f646-4b3c-ab59-8ba1966dec29")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
 		(property "Supplier Link" "https://www.digikey.com/en/products/detail/littelfuse-inc/1-5KE6-8A/285842"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "0f0b9932-711b-4ffd-b4e0-efa0085f32aa")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "LCSC" "C294199"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a3b8a7b5-8d56-4e02-bb5d-0e4ec73783c5")
 			(effects
 				(font
 					(size 1.27 1.27)

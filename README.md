@@ -68,11 +68,11 @@ This project's schematic design, debugging, and documentation were developed wit
 ```
 USB-C  ──  F1 polyfuse  ──  U1 TPS2553 eFuse  ──  +5V rail  ──  J4.3 → NES
   VBUS      2.0A hold        ~1.18A limit          C1 100µF
-            4.0A trip        soft-start            D1 TVS
+            3.8A trip        soft-start            D1 TVS
             (backup)         thermal shutdown
 ```
 
-F1 alone trips at 4.0 A, which protects nothing on a console that draws
+F1 alone trips at 3.8 A, which protects nothing on a console that draws
 roughly 0.5–0.7 A. U1 is the real protection; F1 stays as a backup in case
 the eFuse ever fails short.
 
@@ -248,11 +248,9 @@ state risks another transistor, which is the likely fate of the first one.
 - v1 silkscreen doesn't include component value labels or Q1 pin markers (E/C/B). **Values are on the silkscreen from v2.** On v1 this caused three separate wrong-resistor errors in R1 (a 5.1kΩ and an 820Ω both fitted before the right value went in) because R1/R3/R4/R5/R7 share one footprint across four values. Q1 pin markers are still outstanding.
 - **VBUS input trace is undersized for its own fuse (all fabbed boards).** `/raw_5v`
   reaches F1 through 9.06 mm of 0.2 mm trace. It exceeds FR4's glass transition at
-  2.22 A and chars at 2.83 A, while F1 is guaranteed not to trip below 2.0 A and only
-  guaranteed to trip above its rated trip current — so there is a window where the trace
-  is destroyed and the fuse may never act. On the fabbed boards F1 is a Littelfuse RHEF200
-  (trip 3.8 A), giving a 2.2–3.8 A window; from v2 F1 is a Jinrui JK30-200 (trip 4.0 A),
-  which widens it slightly to 2.2–4.0 A. The trace fix is what closes it, not the fuse. Root cause was a netclass pattern gap:
+  2.22 A and chars at 2.83 A, while F1 (RHEF200) is guaranteed not to trip below 2.0 A
+  and only guaranteed to trip above 3.8 A — so there is a 2.2–3.8 A window where the
+  trace is destroyed and the fuse may never act. Root cause was a netclass pattern gap:
   the `Power` class (0.8 mm) was assigned by the patterns `/5V*`, `GND*`, `VBUS`, none
   of which match the net's actual name `/raw_5v`, so it fell through to `Default`
   (0.2 mm). DRC cannot catch this — it enforces the board `min_track_width` (0.2 mm),
@@ -418,24 +416,17 @@ Key notes:
 - **Trim all through-hole leads flush.** The board sits in the RF module slot with shielding immediately below it. Long clipped leads on the underside will short against the can — on the prototype this presented as an intermittent supply trip that only appeared when the board was moved.
 - C2 (470µF): not 100µF. Into the 150Ω load, 100µF gives τ=15 ms against the 16.7 ms field period and tilts the picture top to bottom. 470µF gives τ=70 ms.
 - F1 (polyfuse): sits with slight standoff above PCB by design — this is normal for radial-lead parts, not a defect.
-  **No KiCad footprint exists for the JK30 series**, so F1 borrows `Fuse:Fuse_Bourns_MF-RG300`:
-  pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. The JK30 series is radial leaded
-  with D(typ) lead spacing of 5.1 mm and tinned 24AWG / 0.5 mm leads family-wide — confirmed from the
-  datasheet — so they splay slightly onto that diagonal pad pair, the same accommodation the RHEF200
-  needed, and C(max) body thickness of 3.0 mm matches the footprint's in-plane depth. The Bourns
-  device is rated 3.0 A/5.1 A and the silkscreen outline is *its* body — treat the outline as indicative,
-  not as a clearance boundary. Drawing a true footprint would move pad 2 by ~1.2 mm and force a re-route,
-  so it is a v3 job, not a patch.
-  **From v2, F1 is a Jinrui JK30-200 (LCSC C369104), not the Littelfuse RHEF200** — LCSC does not stock the
-  RHEF series. Same IH 2.0 A, slightly lower resistance than the part it replaces (40/100 mΩ vs 45/110 mΩ),
-  30 V rather than 16 V. IT rises 3.8 A → 4.0 A, and I_max drops 100 A → 40 A — that is the largest fault
-  current the device can interrupt, and a USB-C source limited to ~3 A never approaches it.
-  **Check height before ordering.** Radial PPTCs stand vertically, so B(max) is height above the board:
-  15.2 mm here against the RHEF200's ~9–10 mm, roughly 5–6 mm more inside the NES shell, and F1 sits 7.2 mm
-  from the top board edge. The obvious 9 mm alternative, the JKSEMI JK16-200T (C5183874), is **not**
-  recommended: LCSC lists it as through-hole at 5.1 mm pitch, but its own datasheet is headed *"JK16 Series
-  Surface Mount PTC Devices"* and LCSC has no land pattern drawn for it, so its package could not be
-  confirmed. Do not substitute it without checking the mechanical drawing.
+  **No KiCad footprint exists for the Littelfuse RHEF series**, so F1 borrows `Fuse:Fuse_Bourns_MF-RG300`:
+  pads 5.24 mm centre-to-centre with 1.01 mm drills. The RHEF200's 0.51 mm leads at 5.05 ±0.75 mm
+  spacing fit that comfortably, but the Bourns device is rated 3.0 A/5.1 A and the silkscreen outline is
+  *its* body — treat the outline as indicative, not as a clearance boundary. Drawing a true RHEF200
+  footprint would move pad 2 by ~1.2 mm and force a re-route, so it is a v3 job, not a patch.
+  **F1 stays a Littelfuse RHEF200 and is deliberately not an LCSC part.** It is through-hole, so it is not
+  on the SMD assembly BOM PCBWay sources, and the LCSC alternatives are worse where it counts — Jinrui
+  JK30-200 (C369104) drops I_max to 40 A and stands 15.2 mm tall, and JKSEMI JK16-200T (C5183874) is listed
+  as through-hole but its datasheet is headed *"JK16 Series Surface Mount PTC Devices"* with no land pattern
+  drawn, so its package is unconfirmed. If F1 ever needs reordering, buy it from DigiKey or Mouser alongside
+  the Switchcraft RCA jacks, which cannot come from LCSC either.
 - USB-C1: GCT USB4125-GF-A-0190, SMD receptacle — power-only, 6P, no data lines, 48 V / 3 A,
   20,000 mating cycles. **From v2 this replaces the GCT USB4970-00-A**, which LCSC does not stock —
   searching that MPN on LCSC will always come up empty. The USB4125 is a different GCT line number that

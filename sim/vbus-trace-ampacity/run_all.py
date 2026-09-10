@@ -25,12 +25,7 @@ PRE_FIX   = ([(0.20, 7.951), (0.80, 4.220), (0.20, 0.709)], 7.951)
 POST_FIX  = ([(0.80, 11.065), (0.80, 1.309), (0.20, 0.709)], 11.065)
 FUSED_5V  = ([(0.60, 7.36), (0.80, 22.94)], 7.36)   # F1.1 -> U1.1 (IN)
 
-F1_HOLD, F1_TRIP = 2.0, 3.8        # RHEF200 IH / IT, amps -- the part fitted on every
-                                   # board this advisory covers. From v2 F1 is a Jinrui
-                                   # JK30-200 (2.0 A hold / 4.0 A trip); set F1_TRIP = 4.0
-                                   # to re-run the advisory against it. Nothing flips: the
-                                   # as-fabbed trace still fails first under every Rth
-                                   # scaling, and /fused_5v goes 68 C -> 74 C at trip.
+F1_HOLD, F1_TRIP = 2.0, 3.8        # RHEF200 IH / IT, amps
 F1_TRIP_TIME_10A = 4.3             # seconds, datasheet max at 10 A
 U1_LIMIT_MAX = 1.26                # TPS2553 IOS(max) with R6 = 22k
 

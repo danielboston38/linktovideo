@@ -453,7 +453,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C369104.pdf"
+		(property "Datasheet" "https://www.littelfuse.com/assetdocs/resettable-ptc-rhef-datasheet?assetguid=5c5a29fe-1611-4d65-b4ce-dc979c44d206"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -487,7 +487,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "Jinrui (ShenZhen JinRui Electronic Material)"
+		(property "Manufacturer" "Littelfuse"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -499,7 +499,7 @@
 				)
 			)
 		)
-		(property "MPN" "JK30-200"
+		(property "MPN" "RHEF200"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -511,7 +511,7 @@
 				)
 			)
 		)
-		(property "BOM Comments" "Replaces Littelfuse RHEF200, which LCSC does not stock. IH 2.0 A unchanged; IT rises 3.8 A -> 4.0 A; resistance improves slightly (Rmin 40 / R1max 100 mOhm vs the RHEF200's 45/110), so marginally less drop on the 5 V rail. Imax drops 100 A -> 40 A: that is the maximum fault current the device can interrupt, and a USB-C source limited to ~3 A never approaches it. CHECK HEIGHT BEFORE ORDERING: B(max) is 15.2 mm against the RHEF200's ~9-10 mm, and radial PPTCs stand vertically, so this is ~5-6 mm more height above the board inside the NES shell. F1 sits 7.2 mm from the top board edge. Sourcing checked 2026-09-09: 5,800 in stock, MOQ 10, multiple 10, $0.063 at qty 10. NOT the JKSEMI JK16-200T (C5183874): LCSC lists that part as Through Hole P=5.1mm, but its own datasheet is headed 'JK16 Series Surface Mount PTC Devices' and LCSC has no land pattern drawn for it, so its package could not be confirmed - do not substitute it without checking the mechanical drawing."
+		(property "BOM Comments" "Reused from the v1 build - desoldered, not reordered. Deliberately NOT moved to LCSC: F1 is through-hole, so it is not on the SMD assembly BOM PCBWay sources, and the Littelfuse part is better than the LCSC alternatives on every axis that matters (Imax 100 A vs 40 A, 3.8 A trip vs 4.0 A, ~9-10 mm body vs 15.2 mm). If it ever does need reordering, buy it from DigiKey or Mouser alongside the Switchcraft RCA jacks, which cannot come from LCSC either. The closest LCSC parts are Jinrui JK30-200 (C369104, verified radial, but taller and only 40 A Imax) and JKSEMI JK16-200T (C5183874, whose datasheet is headed 'Surface Mount' despite LCSC listing it as through-hole - package unconfirmed, do not use without checking the mechanical drawing)."
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -523,7 +523,7 @@
 				)
 			)
 		)
-		(property "Supplier Link" "https://www.lcsc.com/product-detail/C369104.html"
+		(property "Supplier Link" "https://www.digikey.com/en/products/detail/littelfuse-inc/RHEF200/5130265"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -535,7 +535,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C369104"
+		(property "LCSC" ""
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -547,7 +547,7 @@
 				)
 			)
 		)
-		(property "Spec" "PPTC radial leaded, IH 2.0 A / IT 4.0 A / 30 V max / Imax 40 A, Rmin 40 mOhm, R1max 100 mOhm, trip 11 s max, 5.1 mm lead pitch, 0.5 mm (24AWG) leads, 3.0 mm body thickness, 15.2 mm max height"
+		(property "Spec" "PPTC radial, IH 2.0 A / IT 3.8 A / 16 V max / Imax 100 A, Rmin 45 mOhm, R1max 110 mOhm"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -559,7 +559,7 @@
 				)
 			)
 		)
-		(property "Footprint Note" "No JK30 footprint exists in the KiCad libraries. F1 uses the Bourns MF-RG300 land pattern: pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. Confirmed against the JK30 datasheet: the series is radial leaded, D(typ) lead spacing is 5.1 mm and leads are tinned 24AWG / 0.5 mm dia across the whole family, so they seat in the 1.01 mm drills with the same slight splay onto the diagonal pad pair that the RHEF200 needed. C(max) body thickness is 3.0 mm, matching the footprint's 3.0 mm in-plane depth. The silkscreen outline is still the Bourns 3.0 A/5.1 A body, not this part's - do not use it for clearance."
+		(property "Footprint Note" "No Littelfuse RHEF footprint exists in the KiCad libraries. F1 uses the Bourns MF-RG300 land pattern: pads at (0,0) and (5.1,1.2), 5.24 mm centre-to-centre, 1.01 mm drills. RHEF200 leads are 0.51 mm dia at 5.05 +/-0.75 mm spacing, so they fit, but the Bourns part is a 3.0 A/5.1 A device and the drawn body outline is its, not the RHEF200's - do not trust the outline for clearance."
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)

@@ -40,16 +40,8 @@ trace on 1 oz copper**. That segment is the trunk: both VBUS pins (A9 and B9) fe
 through it, so **100 % of the board's input current crosses it with no parallel path.**
 
 The problem is not the trace on its own. It is the trace *relative to the fuse behind
-it*. On every affected board F1 is a Littelfuse RHEF200: it is guaranteed **never to
-trip below 2.0 A**, and guaranteed to trip **only above 3.8 A**.
-
-> **F1 changes in v2.** LCSC does not stock the RHEF series, so from v2 F1 is a Jinrui
-> JK30-200 (LCSC C369104) — same 2.0 A hold, slightly lower resistance (40/100 mΩ vs
-> 45/110 mΩ), 30 V rather than 16 V, and I_max 40 A rather than 100 A, but a **4.0 A**
-> trip rather than 3.8 A. Every figure below was
-> re-run against a 4.0 A trip current using the published harness. **No conclusion changes.**
-> The damage window widens slightly, and the two numbers that actually move are called out
-> where they appear. What closes this defect is the trace, not the fuse.
+it*. F1 is a Littelfuse RHEF200: it is guaranteed **never to trip below 2.0 A**, and
+guaranteed to trip **only above 3.8 A**.
 
 Electrothermal simulation of the as-fabbed geometry:
 
@@ -59,19 +51,18 @@ Electrothermal simulation of the as-fabbed geometry:
 | **2.00 A — max current F1 will hold indefinitely** | **105 °C** | **never trips** |
 | 2.50 A | 174 °C | may not trip |
 | 3.00 A — max from a compliant USB-C source | 303 °C | may not trip |
-| 3.80 A — RHEF200's guaranteed trip current (4.0 A from v2) | thermal runaway | trips at last |
+| 3.80 A — F1's guaranteed trip current | thermal runaway | trips at last |
 
 Damage thresholds for the as-fabbed trace:
 
 - **2.22 A** — exceeds FR4's glass transition (130 °C)
 - **2.83 A** — charring and delamination (250 °C)
-- F1 is not guaranteed to trip until **3.8 A** — **4.0 A** for the JK30-200 fitted from v2
+- F1 is not guaranteed to trip until **3.8 A**
 
 **So there is a window from roughly 2.2 A to 3.8 A in which the trace is being
-destroyed and the fuse is not guaranteed to do anything at all** — 2.2–4.0 A on a v2
-board, marginally worse. Because the board presents 5.1 kΩ Rd on both CC pins, a
-compliant USB-C source will happily deliver up to 3.0 A — landing in the middle of
-that window. At 3.0 A the trace passes FR4's glass
+destroyed and the fuse is not guaranteed to do anything at all.** Because the board
+presents 5.1 kΩ Rd on both CC pins, a compliant USB-C source will happily deliver up
+to 3.0 A — landing in the middle of that window. At 3.0 A the trace passes FR4's glass
 transition in **0.63 s** and continues heating toward 303 °C while F1 sits below its
 trip current, potentially forever.
 
@@ -84,9 +75,6 @@ The design invariant that was violated is simple:
 > The current that damages the narrowest trace must be **higher** than the fuse's trip current.
 
 As fabbed: 2.22 A < 3.8 A ❌  After the fix: 5.64 A > 3.8 A ✅
-
-The fixed trace also clears the JK30-200's 4.0 A trip (5.64 A > 4.0 A ✅), so the
-invariant holds for both parts.
 
 ---
 
@@ -138,7 +126,7 @@ current-carrying net was re-checked for the same defect. Results:
 | Net | Narrowest copper on its current path | Verdict |
 |---|---|---|
 | `/raw_5v` (USB-C → F1) | **0.20 mm × 9.06 mm** as fabbed | **The defect. Fixed in `247334c`.** |
-| `/fused_5v` (F1 → U1 IN) | 0.60 mm | **OK** — 68 °C at the RHEF200's 3.8 A trip, 74 °C at the JK30-200's 4.0 A; exceeds Tg only at 5.43 A either way |
+| `/fused_5v` (F1 → U1 IN) | 0.60 mm | **OK** — 68 °C at F1's 3.8 A trip; exceeds Tg only at 5.43 A |
 | `/5V` (U1 OUT → console) | 0.20 mm | **OK** — see below |
 | `GND` | 0.40 mm + pour | OK |
 
@@ -257,8 +245,7 @@ was run scaling thermal resistance down to credit that plane:
 | 40 % (very generous) | 2.95 A | 3.76 A |
 
 Even crediting the plane with a 60 % reduction in thermal resistance, the charring
-threshold asymptotes at **3.76 A — still below F1's guaranteed trip current**, whether
-that is the RHEF200's 3.8 A or the JK30-200's 4.0 A (against which the margin is wider).
+threshold asymptotes at **3.76 A — still below F1's 3.8 A guaranteed trip current**.
 **Under every assumption tested, the trace is damaged before the fuse is guaranteed to
 act.**
 
@@ -280,9 +267,7 @@ python3 sim/vbus-trace-ampacity/run_all.py
 ```
 
 It regenerates every number quoted above, including the validation checks and the
-sensitivity sweep. The two v2 figures — the JK30-200's 4.0 A trip and the 74 °C it puts
-on `/fused_5v` — come out of the same harness with `F1_TRIP = 4.0`; see the comment on
-that constant in `run_all.py`. The harness README documents the model, its provenance, and — more
+sensitivity sweep. The harness README documents the model, its provenance, and — more
 usefully — a list of the assumptions most worth attacking if you want to falsify this.
 
 Independent review is welcome and actively wanted. Please open an issue if any of it

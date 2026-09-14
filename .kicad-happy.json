@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Link to Video",
+    "revision": "v2",
+    "author": "Mark",
+    "market": "us",
+    "emc_standard": "fcc-class-b",
+    "ambient_temperature_c": 25
+  },
+  "analysis": {
+    "output_dir": "analysis",
+    "retention": 5,
+    "auto_diff": true,
+    "track_in_git": false
+  },
+  "suppressions": [
+    {
+      "rule_id": "GP-001",
+      "reason": "Two-layer board with a single GND pour on B.Cu. Nets routed on B.Cu score 0-40% 'plane coverage' because the rule looks for copper on the opposite layer; their actual return is the coplanar pour surrounding them. Composite video (~6 MHz) does not need a dedicated reference plane."
+    },
+    {
+      "rule_id": "IO-001",
+      "components": [
+        "USB-C1",
+        "J2"
+      ],
+      "reason": "USB-C1 is a power-only receptacle (USB4125-GF-A-0190) with no data pins to filter. J2 is a 75-ohm composite audio/video output where series filtering would degrade the signal."
+    }
+  ]
+}

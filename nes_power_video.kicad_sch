@@ -4303,7 +4303,7 @@
 				)
 			)
 		)
-		(property "Spec" "PPTC radial, IH 2.0 A / IT 3.8 A / 16 V max"
+		(property "Spec" "PPTC radial, IH 2.0 A / IT 3.8 A / 16 V max / Imax 100 A, Rmin 45 mOhm, R1max 110 mOhm"
 			(at 128.27 143.51 0)
 			(hide yes)
 			(show_name no)
@@ -4334,6 +4334,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "BOM Comments" "Reused from the v1 build - desoldered, not reordered. Deliberately NOT moved to LCSC: F1 is through-hole, so it is not on the SMD assembly BOM PCBWay sources, and the Littelfuse part is better than the LCSC alternatives on every axis that matters (Imax 100 A vs 40 A, 3.8 A trip vs 4.0 A, ~9-10 mm body vs 15.2 mm). If it ever does need reordering, buy it from DigiKey or Mouser alongside the Switchcraft RCA jacks, which cannot come from LCSC either. The closest LCSC parts are Jinrui JK30-200 (C369104, verified radial, but taller and only 40 A Imax) and JKSEMI JK16-200T (C5183874, whose datasheet is headed 'Surface Mount' despite LCSC listing it as through-hole - package unconfirmed, do not use without checking the mechanical drawing)." (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -4667,6 +4683,22 @@
 				)
 			)
 		)
+		(property "BOM Comments" "LCSC stock of the 1.5KE6.8A is DOWO-branded (C294199, DO-201, MOQ 5): VWM 5.8 V, VBR 6.46 V, VC 10.5 V @ 142.86 A - equivalent to the Littelfuse figures this design was characterised against, so every conclusion in the README still holds, including the finding that D1 does not protect U1. Manufacturer/MPN fields still name Littelfuse because that is the part actually fitted on v1 and the one the DigiKey supplier link points at; 1.5KE6.8A is a generic type number, not a Littelfuse-only MPN. Order either." (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C294199" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3a266cb7-dfb4-48d7-aae0-86aa52df0e42")
 		)
@@ -4972,7 +5004,7 @@
 				)
 			)
 		)
-		(property "Value" "USB4970-00-A"
+		(property "Value" "USB4125-GF-A-0190"
 			(at 113.538 132.842 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4982,7 +5014,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x_6P_TopMnt_Horizontal"
+		(property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x-0190_6P_TopMnt_Horizontal"
 			(at 116.84 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -4993,7 +5025,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://gct.co/files/drawings/usb4970.pdf"
+		(property "Datasheet" "https://gct.co/files/drawings/usb4125.pdf"
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5015,7 +5047,7 @@
 				)
 			)
 		)
-		(property "Manufacturer" "GCT"
+		(property "Manufacturer" "Global Connector Technology (GCT)"
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5026,7 +5058,7 @@
 				)
 			)
 		)
-		(property "MPN" "USB4970-00-A"
+		(property "MPN" "USB4125-GF-A-0190"
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5037,7 +5069,7 @@
 				)
 			)
 		)
-		(property "Spec" "USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2)"
+		(property "Spec" "USB Type-C receptacle, 6P power-only (VBUS x2, GND x2, CC1, CC2), 48 V / 3 A, 20,000 mating cycles, 1.90 mm shell stake"
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5048,7 +5080,7 @@
 				)
 			)
 		)
-		(property "Supplier Link" "https://www.digikey.com/en/products/detail/gct/USB4970-00-A/28722813"
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C5246813.html"
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5059,7 +5091,7 @@
 				)
 			)
 		)
-		(property "Footprint Note" "KiCad has no USB4970 footprint. GCT's USB4970 drawing specifies the same recommended layout as the USB4125: pad centres 1.00/3.04/5.50 mm, widths 0.70/0.76/0.80 mm x 1.20 mm, shell holes 8.64 x 3.80 mm apart, 1.10 x 1.70 mm with 0.60 x 1.20 mm slots. Verified against the drawing 2026-08-28. USB4970-00-A takes the 1.00 mm shell stake, so the plain USB4125-xx-x footprint is the match; -0190 is the 1.90 mm stake variant."
+		(property "Footprint Note" "Exact KiCad footprint for this MPN. USB_C_Receptacle_GCT_USB4125-xx-x-0190 is byte-identical in copper, silk, fab, courtyard and drills to the plain USB4125-xx-x land pattern the board was laid out with - only the name, descr and 3D model differ - so this is a naming correction, not a layout change. The -0190 suffix is the 1.90 mm shell stake, which protrudes 0.30 mm through a 1.6 mm board and gives a bottom-side fillet; the 1.00 mm stake (plain USB4125-GF-A, LCSC C3151650) does not reach through."
 			(at 113.03 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -5068,6 +5100,22 @@
 				(font
 					(size 1.27 1.27)
 				)
+			)
+		)
+		(property "BOM Comments" "Replaces GCT USB4970-00-A, which LCSC does not stock - an MPN search will always come up empty. The USB4125 is a different GCT line number that LCSC does carry, and the board was already laid out to its land pattern. Stock is thin (~600-3,700 depending on source) next to the generic Chinese 6P parts, so order spares. Plain 1.00 mm stake variant is C3151650 if the -0190 is out." (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C5246813" (at 0 0 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "B5"
@@ -7365,6 +7413,239 @@
 			(justify left bottom)
 		)
 		(uuid "d39e6e99-0278-4de6-ad02-d32d469d90b8")
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 208.28 140.97 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c19946e0-853f-4418-a065-b24e96a402e6")
+		(property "Reference" "C4"
+			(at 210.185 138.42999999999998 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 210.185 142.24 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C49678.pdf"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CC0805KRX7R9BB104"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C49678"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Spec" "100 nF +/-10%, 50 V, X7R, 0805 (any equivalent >=16 V X7R)"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier Link" "https://www.lcsc.com/product-detail/C49678.html"
+			(at 208.28 140.97 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ba65fff8-d207-4f43-9d1f-37adb6397e5f")
+		)
+		(pin "2"
+			(uuid "e2db979b-89e6-4497-ae51-d11fd2a14ad5")
+		)
+		(instances
+			(project "nes_power_video"
+				(path "/467ff530-bd7b-4486-a282-e5127feecbd3"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 208.28 147.32 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2a25c949-5f72-4134-b40a-e292e965e5d6")
+		(property "Reference" "#PWR11"
+			(at 208.28 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 208.28 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 208.28 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 208.28 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 208.28 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5d5ddbd2-4142-4cac-866f-84809955dab4")
+		)
+		(instances
+			(project "nes_power_video"
+				(path "/467ff530-bd7b-4486-a282-e5127feecbd3"
+					(reference "#PWR11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 205.74 137.16) (xy 208.28 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f8a1b20-7c31-4d2e-9a01-11c2d3e4f501")
+	)
+	(wire
+		(pts
+			(xy 208.28 144.78) (xy 208.28 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f1279df5-0912-4687-be40-a60855ffea96")
 	)
 	(sheet_instances
 		(path "/"

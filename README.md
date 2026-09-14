@@ -244,7 +244,6 @@ at the NES's video level, the B-E junction is forward-biased by 3–4 V, so Q1
 saturates with its collector tied directly to ground and nothing limiting the
 current. Q1 is a 150 mA part; F1 does not trip until 3.8 A. Every power-up in that
 state risks another transistor, which is the likely fate of the first one.
-- F1 (polyfuse) footprint field in KiCad is mislabeled as a polarized capacitor footprint despite correct value — cosmetic/documentation issue only, does not affect function. Fix planned for v2.
 - Video/audio RCA jack mounting holes are slightly asymmetric — cosmetic only, doesn't affect NES shell fit.
 - v1 silkscreen doesn't include component value labels or Q1 pin markers (E/C/B). **Values are on the silkscreen from v2.** On v1 this caused three separate wrong-resistor errors in R1 (a 5.1kΩ and an 820Ω both fitted before the right value went in) because R1/R3/R4/R5/R7 share one footprint across four values. Q1 pin markers are still outstanding.
 - **VBUS input trace is undersized for its own fuse (all fabbed boards).** `/raw_5v`
@@ -386,7 +385,8 @@ Two things to know before ordering: **U1 is out of stock at both DigiKey and
 Mouser** (112-day factory lead) while LCSC holds 44,000, so PCBWay must be
 pointed at LCSC for it; and **USB-C1 is Hybrid, not SMD** — its four shell
 stakes are through-hole pads on the paste layer, meant to reflow pin-in-paste
-with the rest, not to be left dry. Full detail, including what to upload and
+with the rest, not to be left dry. From v2 all four SMD lines (C3, R6, U1,
+USB-C1) are LCSC parts, so PCBWay can source the whole assembly BOM there. Full detail, including what to upload and
 what not to, is in **[docs/pcbway-smd-assembly.md](./docs/pcbway-smd-assembly.md)**.
 
 Key notes:
@@ -421,12 +421,22 @@ Key notes:
   spacing fit that comfortably, but the Bourns device is rated 3.0 A/5.1 A and the silkscreen outline is
   *its* body — treat the outline as indicative, not as a clearance boundary. Drawing a true RHEF200
   footprint would move pad 2 by ~1.2 mm and force a re-route, so it is a v3 job, not a patch.
-- USB-C1: GCT USB4970-00-A, SMD receptacle — power-only, no data lines. KiCad has no USB4970
-  footprint, but GCT's USB4970 drawing specifies the same recommended land pattern as the USB4125
-  (pad centres 1.00/3.04/5.50 mm, shell holes 8.64 × 3.80 mm apart), so
-  `Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x` is the right footprint. Use the **plain** variant:
-  USB4970-00-A takes the 1.00 mm shell stake, and `-0190` is the 1.90 mm stake part. Pad geometry is
-  identical between the two, so this is a naming correction, not a layout change.
+  **F1 stays a Littelfuse RHEF200 and is deliberately not an LCSC part.** It is through-hole, so it is not
+  on the SMD assembly BOM PCBWay sources, and the LCSC alternatives are worse where it counts — Jinrui
+  JK30-200 (C369104) drops I_max to 40 A and stands 15.2 mm tall, and JKSEMI JK16-200T (C5183874) is listed
+  as through-hole but its datasheet is headed *"JK16 Series Surface Mount PTC Devices"* with no land pattern
+  drawn, so its package is unconfirmed. If F1 ever needs reordering, buy it from DigiKey or Mouser alongside
+  the Switchcraft RCA jacks, which cannot come from LCSC either.
+- USB-C1: GCT USB4125-GF-A-0190, SMD receptacle — power-only, 6P, no data lines, 48 V / 3 A,
+  20,000 mating cycles. **From v2 this replaces the GCT USB4970-00-A**, which LCSC does not stock —
+  searching that MPN on LCSC will always come up empty. The USB4125 is a different GCT line number that
+  LCSC *does* carry (C5246813), and the board was already laid out to its land pattern, so this is a
+  sourcing change with no layout change. The footprint is
+  `Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x-0190` — byte-identical in copper, silk, fab, courtyard
+  and drills to the plain `USB4125-xx-x` variant the board was drawn with; only the name, descr and 3D
+  model differ. Use the **-0190**: it is the 1.90 mm shell stake, which protrudes 0.30 mm through this
+  1.6 mm board and gives a bottom-side fillet, where the 1.00 mm stake (plain `USB4125-GF-A`, C3151650)
+  does not reach through. LCSC stock is thin next to the generic Chinese 6P parts — order spares.
 - U1 (TPS2553, SOT-23-6): pin 1 is IN, marked by the dot on the package. Pin order is IN, GND, EN down one side and OUT, ILIM, FAULT up the other. Order the plain TPS2553DBVR — the `-1` suffix is the latch-off variant, which would need a power cycle after every trip instead of retrying automatically.
 - C3 (100nF, 0805): TI requires this as close to U1 pin 1 as the layout allows. It sits immediately left of U1.
 - R6 (22k, 0805): sets the current limit — see the table above before substituting.

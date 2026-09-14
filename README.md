@@ -167,6 +167,39 @@ not measured on hardware, and still not a supported mode.
 - Fabricated via PCBWay
 - See [BOM.csv](./BOM.csv) for full parts list
 
+### Sponsored by PCBWay
+
+The most recent fabrication run of this board — the 2026-08-26 package, ordered
+**2026-08-27** — was
+**sponsored by [PCBWay](https://www.pcbway.com/)**, who covered the manufacturing
+of the boards this project is built and tested on. Thank you — having the fab
+covered is what let this revision get made, populated and put on the bench rather
+than staying a set of gerbers.
+
+Those boards predate [`247334c`](../../commit/247334c), so like every board
+fabricated so far they carry the `/raw_5v` trace-ampacity defect described in the
+caution at the top of this file — see
+[the safety advisory](docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md).
+
+PCBWay have been good to work with on the practical side too: the 2-layer,
+1.6 mm FR4 board here is an unremarkable order for them, the gate-generated fab
+package uploaded without any back-and-forth over the drill or layer files, and
+they will run the four SMD lines (C3, R6, U1, USB-C1) as single-sided SMT while
+leaving the through-hole parts to the bench — including sourcing the TPS2553
+from LCSC, which DigiKey and Mouser have on a 112-day lead. See
+[docs/pcbway-smd-assembly.md](./docs/pcbway-smd-assembly.md) for that workflow.
+
+The project is also published on PCBWay's community site, with the same design
+files and documentation as this repository:
+
+**→ [Link to Video on PCBWay Community](https://www.pcbway.com/project/shareproject/Link_to_video_7f1f9279.html)**
+
+The sponsorship covered fabrication only, and carries no editorial influence over
+this documentation. The design remains [CERN-OHL-S v2](./LICENSE.txt) and
+OSHWA-certified, free for anyone to study, modify, build and have made wherever
+they like. The PCBWay-hosted copy is published under GPL v3 because their form
+does not offer CERN-OHL-S — see [License](#license).
+
 ## Build Notes / Known Issues (v1)
 
 - **Q1 emitter node shorted to +5V (breaks video).** Q1's emitter is clamped to the rail, so C2 couples +5V — not video — into R5/J3. The exact wiring differs by revision: in the repo's pre-v1.1 source R1 had *both* ends on `/5V`, while the fabbed 2026-07-16 boards have R1 pad 1 on `/5V` and pad 2 on a separate net with C1 only. Root cause: an R2 (110Ω) was deleted from the schematic on 2026-07-04, and KiCad merged the two leftover collinear wire stubs into one wire, welding the emitter node to `/5V`. Fixed in source as of v1.1. **Rework for an existing board** (applies to the boards fabbed from the 2026-07-16 gerbers, whose IPC netlist reads `/5V = J4.3, F1.1, R1.1, Q1.1, C2.1, D1.1` and `Net-(C1-Pad1) = R1.2, C1.1`):
@@ -341,9 +374,11 @@ the package always describes the board that was actually verified — recorded i
 
 Run `check` instead of `package` to get the verdict without writing files.
 
-`pcbway_production/` is not tracked — packages are reproducible from the board,
-and the two that were actually fabbed remain in git history at the 2026-07-07
-and 2026-07-16 commits. Generate a fresh one when you order rather than reaching
+`pcbway_production/` is not tracked — packages are reproducible from the board.
+The first two fab packages remain in git history at the 2026-07-07 and 2026-07-16
+commits. The 2026-08-26 package behind the sponsored run was never committed, but
+its copper and outline gerbers were verified byte-identical to the board at
+[`f672f8d`](../../commit/f672f8d), with all 49 drill hits matching. Generate a fresh one when you order rather than reaching
 for an old directory, so the gate re-verifies the board you are about to pay for.
 
 ## Assembly
@@ -459,12 +494,33 @@ transferable to derivatives, which need their own certification.
 
 ## License
 
-Licensed under [CERN-OHL-S v2](./LICENSE.txt) (strongly reciprocal open hardware license). See [LICENSE](./LICENSE.txt).
+Licensed under [CERN-OHL-S v2](./LICENSE.txt) (strongly reciprocal open hardware licence). See [LICENSE](./LICENSE.txt).
+
+**The PCBWay community copy is GPL v3.** PCBWay's project form does not offer
+CERN-OHL-S, so the copy published
+[on their community site](https://www.pcbway.com/project/shareproject/Link_to_video_7f1f9279.html)
+is licensed under GPL v3 instead. Same design, same files, two grants — take
+whichever you obtained the design under. Both are copyleft and both are on
+OSHWA's approved list, so the certification holds either way.
+
+The practical difference is the physical board. CERN-OHL-S applies to *making*
+hardware, so it requires complete source to follow a board someone builds and
+sells. GPL v3's copyleft triggers on distributing the design files, so it does
+not reach a board fabricated from them. Reciprocity on the files is preserved
+under both; reciprocity on manufactured hardware exists only under CERN-OHL-S.
 
 ## Photos
 
 <!-- Add build photos here -->
 
 ## Acknowledgments
+
+- **[PCBWay](https://www.pcbway.com/)** — for sponsoring the fabrication of the
+  latest revision of this board, and for hosting the project on their community
+  site: [Link to Video](https://www.pcbway.com/project/shareproject/Link_to_video_7f1f9279.html).
+- **Tim Worthington** — for the [NESRGB](https://etim.net.au/nesrgb/), whose
+  8-pin mini-DIN pinout J5 on this board feeds.
+- **OSHWA** — for the open hardware certification programme
+  ([US002842](https://certification.oshwa.org/us002842.html)).
 
 <!-- Optional: credit anyone who helped with debugging, Discord community, etc. -->

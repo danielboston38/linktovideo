@@ -1,12 +1,11 @@
 # Ordering SMD-only assembly from PCBWay
 
-This board is mostly through-hole. Only four parts reflow, and they are all on
-the top side, so PCBWay can do a single-sided SMT run and ship boards with the
-fiddly parts already placed — leaving the through-hole half as ordinary
-hand-soldering.
+This board is mostly through-hole. Only four parts reflow, and all four are on the
+top side. PCBWay can thus do a single-sided SMT run and ship boards with the fiddly
+parts already placed. The through-hole half stays ordinary hand-soldering.
 
-This document is the standing description of that order. The files themselves
-are regenerated per run; see [Regenerating the package](#regenerating-the-package).
+This document describes that order. The tooling regenerates the files themselves for
+each run. See [Regenerating the package](#regenerating-the-package).
 
 ## The split
 
@@ -15,23 +14,27 @@ are regenerated per run; see [Regenerating the package](#regenerating-the-packag
 | **SMD (PCBWay)** | C3, R6, U1, USB-C1 | reflowed, top side only |
 | **Through-hole (you)** | C1, C2, D1, F1, J2, J3, J4, J5, Q1, R1, R2, R3, R4, R5, R7 | hand-soldered after delivery |
 
-Four placements over four distinct part numbers — this is about as small as an
-assembly order gets. TP1–TP4 are bare plated holes, not parts; they are
-excluded from the BOM and the placement file.
+The order has four placements over four distinct part numbers. An assembly order does
+not get much smaller than this.
+
+TP1–TP4 are bare plated holes, not parts. The BOM and the placement file exclude them.
 
 ## USB-C1 is Hybrid, not SMD
 
-The Type-C receptacle has ten pads: six SMD signal pads and **four through-hole
-shell stakes**. The shell stakes sit on `F.Paste`, so they are *pin-in-paste* —
-the stencil deposits paste into the holes and they reflow in the same pass as
-everything else. No separate operation, no hand-soldering.
+The Type-C receptacle has ten pads: six SMD signal pads and **four through-hole shell
+stakes**. The shell stakes sit on `F.Paste`, so they are *pin-in-paste*. The stencil
+deposits paste into the holes, and the stakes reflow in the same pass as the other
+parts. No separate operation and no hand-soldering are necessary.
 
-It is listed as `Hybrid` in the Type column for exactly this reason. If it said
-`SMD`, an assembler would have every reason to place the part and leave the four
-mechanical anchors dry, and the connector that takes all the insertion force
-would be held on by six 0.7 mm signal pads. **If PCBWay quotes this as
-through-hole assembly or asks about the shell pins, the answer is: paste and
-reflow them with the SMD pass.**
+The BOM lists the part as `Hybrid` in the Type column for exactly this reason. If it
+said `SMD`, an assembler would have every reason to place the part and leave the four
+mechanical anchors dry. Six 0.7 mm signal pads would then hold the connector that
+takes all the insertion force.
+
+> [!CAUTION]
+> **Tell PCBWay to paste and reflow the four shell stakes with the SMD pass.**
+> They can quote this part as through-hole assembly, or ask about the shell pins.
+> The answer in both cases is the instruction above.
 
 ## Sourcing
 
@@ -45,27 +48,26 @@ now LCSC parts — checked 2026-09-09:
 | **U1** | `TPS2553DBVR` | **DigiKey 0, Mouser 0 (112-day factory lead). LCSC C55266 has 44 k @ $0.298 — insist on LCSC.** |
 | **USB-C1** | `USB4125-GF-A-0190` | LCSC C5246813 — ~630–3,670 in stock, MOQ 1, $0.85. **From v2 this replaces the `USB4970-00-A`, which LCSC does not stock**; the USB4125 is a different GCT line number that LCSC carries, and the board was already laid out to its land pattern. Stock is thin, so tell them to buy spares. |
 
-U1 is the one that can quietly wreck a schedule. It is a live, in-production TI
-part, but Western distribution is empty right now and the factory lead is close
-to four months — while LCSC is sitting on 44,000 of them. Put the LCSC part
-number in front of PCBWay rather than letting them quote it blind.
+U1 is the part that can quietly wreck a schedule. It is a live, in-production TI part,
+but Western distribution is empty right now. The factory lead is close to four months,
+while LCSC holds 44,000 of them. Put the LCSC part number in front of PCBWay. Do not
+let them quote it blind.
 
-The LCSC column in the assembly BOM is there to make that easy; it is not part
-of PCBWay's expected format, and they will ignore it if they prefer their own
-source.
+The LCSC column in the assembly BOM makes that easy. It is not part of the expected
+format of PCBWay, and they will ignore it if they prefer their own source.
 
 Substitution rules worth passing on:
 
 - **R6 must stay ±1%.** It sets the eFuse current limit (`I_OS = 25.9 / R_kΩ`).
   A 5% part is not an acceptable substitute.
-- **U1 must be `TPS2553` and not `TPS2552` or any `-1` suffix.** The 2-vs-3
-  digit is active-high vs active-low enable, and `-1` is the latch-off variant.
-  This board ties EN high and wants auto-retry.
-- **C3 is ordinary** — any ≥16 V X7R 0805 is fine.
+- **U1 must be `TPS2553` and not `TPS2552` or any `-1` suffix.** The 2-against-3
+  digit is active-high against active-low enable. The `-1` suffix is the latch-off
+  variant. This board ties EN high and needs auto-retry.
+- **C3 is ordinary.** Any ≥16 V X7R 0805 is correct.
 
 ## What to upload
 
-From the newest `pcbway_production/<timestamp>/` directory:
+From the newest `pcbway_production/<timestamp>/` directory, upload these files:
 
 | File | Purpose |
 |---|---|
@@ -74,14 +76,15 @@ From the newest `pcbway_production/<timestamp>/` directory:
 | `assembly_cpl_smd.csv` | placements for those four only |
 | `manifest.json` | what was checked, and the hashes it was checked against |
 
-`bom.csv` and `cpl.csv` in the same directory are the **whole board**, all 19
-parts. They are the right files for a fully-assembled order and the wrong ones
-here — uploading them asks PCBWay to source and fit the through-hole parts too.
-Use the `_smd` pair.
+> [!CAUTION]
+> **Do not upload `bom.csv` and `cpl.csv`.** These two files in the same directory
+> cover the **whole board**, all 19 parts. They are the correct files for a
+> fully-assembled order and the wrong ones here. If you upload them, you ask PCBWay to
+> source and fit the through-hole parts too. Use the `_smd` pair.
 
 Order settings: 2 layers, 59.9 × 59.7 mm, 1.6 mm, assembly **top side only**,
-minimum 5 boards. Assembly is manually quoted — expect 1–2 business days before
-you see a price, which is the main scheduling difference from JLCPCB.
+minimum 5 boards. PCBWay quotes assembly manually, so expect 1–2 business days before
+you see a price. This delay is the main scheduling difference from JLCPCB.
 
 ## Fabrication notes
 

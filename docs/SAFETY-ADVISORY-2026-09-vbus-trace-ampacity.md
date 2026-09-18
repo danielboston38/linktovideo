@@ -1,7 +1,7 @@
 # Safety Advisory — VBUS input trace is undersized for its own fuse
 
 **Advisory date:** 2026-09-09
-**Severity:** Low probability, high consequence. Requires a second fault to manifest.
+**Severity:** Low probability, high consequence. A second fault must occur first.
 **Status:** Fixed in source. Existing boards are affected and can be reworked.
 **Fixed by:** commit `247334c` — *fix(pcb): reroute /raw_5v out of the 0.2 mm bottleneck past USB-C1* (2026-09-08)
 
@@ -18,34 +18,38 @@
 | Anything built from repo source before `247334c` (2026-09-08) | 7.95–9.06 mm | **Yes** |
 | Repo source at or after `247334c` | 0 mm on the trunk | No |
 
-This covers **every board that has ever been fabricated for this project**, including
-all boards silkscreened *Kirby's New Dream*. It was verified by walking the copper
-connectivity in the shipped Gerber files themselves, not from the KiCad source.
+This covers **every board ever fabricated for this project**, including
+all boards silkscreened *Kirby's New Dream*. The check walked the copper connectivity
+in the shipped Gerber files, not the KiCad source.
 
-Note that the as-fabbed run (9.06 mm) is slightly **worse** than what the repository
-source carried immediately before the fix (7.95 mm), so figures quoted from the repo
-history understate what is on a physical board.
+Note that the as-fabbed run (9.06 mm) is worse than the repository source immediately
+before the fix (7.95 mm). Figures quoted from the repository history thus understate
+what is on a physical board.
 
-**Quick physical check:** look at the front-copper run between the USB-C connector's
-VBUS pads and pin 2 of F1 (the polyfuse). On an affected board it is a hairline trace
-roughly the same width as a signal trace, about 9 mm long. On a corrected board it is
-visibly fat — the same width as the other power traces.
+**Quick physical check.** Look at the front-copper run between the VBUS pads of the
+USB-C connector and pin 2 of F1 (the polyfuse).
+
+- An affected board has a hairline trace approximately 9 mm long. Its width is the
+  same as the width of a signal trace.
+- A corrected board has a wide trace. Its width is the same as the width of the other
+  power traces.
 
 ---
 
 ## What is wrong
 
 The VBUS input runs from the USB-C receptacle to F1 through **9.06 mm of 0.2 mm-wide
-trace on 1 oz copper**. That segment is the trunk: both VBUS pins (A9 and B9) feed
-through it, so **100 % of the board's input current crosses it with no parallel path.**
+trace on 1 oz copper**. That segment is the trunk. Both VBUS pins (A9 and B9) feed
+through it, so **100 % of the input current of the board crosses it with no parallel
+path.**
 
 The problem is not the trace on its own. It is the trace *relative to the fuse behind
-it*. F1 is a Littelfuse RHEF200: it is guaranteed **never to trip below 2.0 A**, and
-guaranteed to trip **only above 3.8 A**.
+it*. F1 is a Littelfuse RHEF200. It is guaranteed never to trip below **2.0 A**, and
+guaranteed to trip only above **3.8 A**.
 
 Electrothermal simulation of the as-fabbed geometry:
 
-| Input current | Peak trace temperature | F1 behaviour |
+| Input current | Peak trace temperature | F1 behavior |
 |---|---|---|
 | 1.18 A — normal maximum, set by U1's current limit | 48 °C | fine |
 | **2.00 A — max current F1 will hold indefinitely** | **105 °C** | **never trips** |
@@ -59,16 +63,17 @@ Damage thresholds for the as-fabbed trace:
 - **2.83 A** — charring and delamination (250 °C)
 - F1 is not guaranteed to trip until **3.8 A**
 
-**So there is a window from roughly 2.2 A to 3.8 A in which the trace is being
-destroyed and the fuse is not guaranteed to do anything at all.** Because the board
-presents 5.1 kΩ Rd on both CC pins, a compliant USB-C source will happily deliver up
-to 3.0 A — landing in the middle of that window. At 3.0 A the trace passes FR4's glass
-transition in **0.63 s** and continues heating toward 303 °C while F1 sits below its
-trip current, potentially forever.
+**So there is a window from approximately 2.2 A to 3.8 A.** In that window the trace
+burns and the fuse is not guaranteed to do anything at all. The board presents 5.1 kΩ
+Rd on both CC pins, so a compliant USB-C source supplies up to 3.0 A. That current is
+in the middle of the window. At 3.0 A the trace passes FR4's glass transition in
+**0.63 s**. It then continues to heat toward 303 °C while F1 stays below its trip
+current, possibly forever.
 
-At higher fault currents the trace simply becomes the fuse. At 10 A — where F1 is
-*specified* to trip within 4.3 s — the trace reaches the melting point of copper in
-**48 ms**, roughly 90× faster than the device meant to protect it.
+At higher fault currents the trace becomes the fuse. At 10 A the trace reaches the
+melting point of copper in **48 ms**. F1 is *specified* to trip within 4.3 s at that
+current, so the trace fails approximately 90 times faster than the device that must
+protect it.
 
 The design invariant that was violated is simple:
 
@@ -103,7 +108,7 @@ reroute. The fix therefore had two halves: correcting the netclass assignment, a
 
 ### Why DRC never caught it
 
-Because it isn't a DRC violation. KiCad's design-rule checker enforces the *board-wide*
+Because it is not a DRC violation. KiCad's design-rule checker enforces the *board-wide*
 `min_track_width`, which is set to **0.2 mm** here. It does **not** enforce a netclass's
 `track_width`, which is a default for newly routed tracks rather than a constraint.
 
@@ -165,7 +170,7 @@ upstream of U1's current limit has to fail short. Realistic candidates:
 
 If that happens, instead of the fuse cleanly interrupting, you get a trace heating
 past 300 °C inside a closed plastic shell, with the fuse possibly never tripping.
-Nearest neighbouring copper is 0.43 mm (GND) and 0.69 mm (CC2), so sustained charring
+Nearest neighboring copper is 0.43 mm (GND) and 0.69 mm (CC2), so sustained charring
 could also leave a conductive carbon path toward the CC lines.
 
 Probability is low. Consequence is a hot spot inside a sealed console. That combination
@@ -175,53 +180,72 @@ is why this is being published rather than quietly fixed.
 
 ## What you should do
 
-Pick the level of effort you're comfortable with.
+Select one of these four options.
 
-### Option 1 — Bodge wire (recommended, ~15 minutes)
+### Option 1 — Bodge wire (recommended, approximately 15 minutes)
 
-Run a short length of insulated wire, **24 AWG or thicker**, from **F1 pin 2** to the
-**USB-C VBUS copper**, paralleling the hairline trace. F1 pin 2 is through-hole and
-easy to solder. At the far end, either solder to the connector's VBUS pin or scrape a
-window in the soldermask on the wide 0.8 mm section next to the connector and tin it.
+A bodge wire is a wire soldered across a finished board to make a new connection.
+This wire runs in parallel with the hairline trace and carries the current instead
+of it.
 
-24 AWG is 0.205 mm² against the trace's 0.007 mm² — about 29× the cross-section — so
-the original trace stops mattering entirely. This restores the correct ordering: the
-fuse becomes the weakest element again, which is the whole point of fitting one.
+1. Get insulated wire, **24 AWG or thicker**.
+2. Solder one end to **F1 pin 2**. This pin is through-hole and easy to solder.
+3. Solder the other end to the **VBUS copper of the USB-C connector**.
 
-### Option 2 — Reinforce the existing trace (~10 minutes, partial)
+For step 3 you have two methods. Solder to the VBUS pin of the connector. As an
+alternative, scrape a window in the soldermask on the wide 0.8 mm section next to
+the connector, then tin that window.
 
-Scrape the soldermask off the 9 mm run and flood it with solder. This helps, but less
-than it looks: solder's resistivity is roughly 8× copper's, so a generous bead adds
-only about 50 % to the effective conductance. Better than nothing, not as good as a wire.
+24 AWG has a cross-section of 0.205 mm². The trace has 0.007 mm². The wire is thus
+approximately 29 times the cross-section of the trace, so the original trace stops
+mattering entirely. This restores the correct order: the fuse becomes the weakest
+element again, which is the whole point of fitting one.
+
+### Option 2 — Reinforce the existing trace (approximately 10 minutes, partial)
+
+1. Scrape the soldermask off the 9 mm run.
+2. Flood the exposed copper with solder.
+
+This helps, but less than it looks. The resistivity of solder is approximately 8 times
+the resistivity of copper, so a generous bead adds only approximately 50 % to the
+effective conductance. It is better than nothing and not as good as a wire.
 
 ### Option 3 — Accept the risk, with awareness
 
-If the board is powered from a modest supply and you accept the risk profile: do not
-leave it powered unattended, and unplug immediately if the USB end of the board ever
-becomes warm to the touch or you smell hot resin. Normal operation is genuinely fine —
-you are only exposed if something else fails first.
+If the board is powered from a modest supply and you accept the risk profile, obey
+these precautions:
+
+- Do not leave the board powered when nobody is there.
+- If the USB end of the board becomes warm to the touch, disconnect the power
+  immediately.
+- If you smell hot resin, disconnect the power immediately.
+
+Normal operation is genuinely fine. You are only exposed if something else fails first.
 
 ### Option 4 — Rebuild from corrected source
 
-Build a new board from `247334c` or later. Note that current `main` also carries
-unrelated v2 changes (new Switchcraft jack footprints), so it is not a drop-in
-replacement for a v1 bench board.
+Build a new board from `247334c` or later.
+
+Note that current `main` also carries unrelated v2 changes (new Switchcraft jack
+footprints). Thus `main` is not a drop-in replacement for a v1 bench board.
 
 ### What *not* to do
 
-**Do not fit a lower-rated fuse to close the gap.** To protect a 2.22 A trace you would
-need a PPTC tripping below that, which means a hold current under about 1.1 A — below
-the board's own 1.18 A operating limit. It would nuisance-trip in normal use. The trace
-is what needs fixing, not the fuse.
+> [!CAUTION]
+> **Do not fit a lower-rated fuse to close the gap.**
+> To protect a 2.22 A trace, the PPTC must trip below that current. Its hold current
+> must then be below approximately 1.1 A, which is below the 1.18 A operating limit of
+> the board. Such a fuse trips in normal use. The trace is what needs the fix, not the
+> fuse.
 
 ---
 
 ## How this was found and verified
 
-Found incidentally during unrelated bench testing, then characterised by simulation
+Found incidentally during unrelated bench testing, then characterized by simulation
 after the fix, to establish what a board carrying the fault would actually do.
 
-**Method.** A distributed electrothermal model of the route: discretised into 0.25 mm
+**Method.** A distributed electrothermal model of the route: discretized into 0.25 mm
 slices, each with temperature-dependent copper resistance, vertical heat loss through
 the FR4, and lateral thermal conduction between slices. Solved in ngspice.
 

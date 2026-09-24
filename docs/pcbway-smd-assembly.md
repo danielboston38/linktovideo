@@ -5,7 +5,7 @@ top side, so PCBWay can do a single-sided SMT run and ship boards with the fiddl
 parts already placed. The through-hole half stays ordinary hand-soldering.
 
 This document covers that order. The tooling regenerates the files themselves for
-each run; see [Regenerating the package](#regenerating-the-package).
+each run. See [Regenerating the package](#regenerating-the-package).
 
 ## The split
 
@@ -28,7 +28,7 @@ else, with no separate operation and no hand-soldering.
 
 The BOM lists the part as `Hybrid` in the Type column for exactly this reason. If it
 said `SMD`, an assembler would have every reason to place the part and leave the four
-mechanical anchors dry, so six 0.7 mm signal pads would end up holding the connector
+mechanical anchors dry. Then only six 0.7 mm signal pads would hold the connector
 that takes all the insertion force.
 
 > [!CAUTION]
@@ -48,10 +48,10 @@ now LCSC parts — checked 2026-09-09:
 | **U1** | `TPS2553DBVR` | **DigiKey 0, Mouser 0 (112-day factory lead). LCSC C55266 has 44 k @ $0.298 — insist on LCSC.** |
 | **USB-C1** | `USB4125-GF-A-0190` | LCSC C5246813 — ~630–3,670 in stock, MOQ 1, $0.85. **From v2 this replaces the `USB4970-00-A`, which LCSC does not stock**; the USB4125 is a different GCT line number that LCSC carries, and the board was already laid out to its land pattern. Stock is thin, so tell them to buy spares. |
 
-U1 is the part that can quietly wreck a schedule. It's a live, in-production TI part,
-but Western distribution is empty right now: the factory lead is close to four months,
-while LCSC holds 44,000 of them. Put the LCSC part number in front of PCBWay rather
-than letting them quote it blind.
+U1 is the part most likely to delay an order. It's an in-production TI part, but
+DigiKey and Mouser have none right now, and the factory lead is close to four months.
+LCSC has 44,000 of them. Give PCBWay the LCSC part number, so they don't quote the
+part without it.
 
 The LCSC column in the assembly BOM makes that easy. It isn't part of PCBWay's
 expected format, and they'll ignore it if they prefer their own source.
@@ -59,11 +59,11 @@ expected format, and they'll ignore it if they prefer their own source.
 Substitution rules worth passing on:
 
 - **R6 must stay ±1%.** It sets the eFuse current limit (`I_OS = 25.9 / R_kΩ`), so
-  a 5% part won't do.
+  a 5% part is not acceptable.
 - **U1 must be `TPS2553`, not `TPS2552` or any `-1` suffix.** The TPS2552 has an
   active-low enable and the TPS2553 an active-high one, and `-1` is the latch-off
   variant. This board ties EN high and needs auto-retry.
-- **C3 is ordinary.** Any ≥16 V X7R 0805 will do.
+- **C3 is ordinary.** Any ≥16 V X7R 0805 is correct.
 
 ## What to upload
 

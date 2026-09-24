@@ -73,9 +73,9 @@ USB-C  ──  F1 polyfuse  ──  U1 TPS2553 eFuse  ──  +5V rail  ──  
             (backup)         thermal shutdown
 ```
 
-F1 doesn't trip until 3.8 A, and the console only draws about 0.5–0.7 A, so on its
-own F1 protects almost nothing. U1 does the real work. F1 is there in case the eFuse
-fails short.
+F1 doesn't trip until 3.8 A. The console only draws about 0.5–0.7 A, so F1 alone
+protects almost nothing. U1 gives the real protection. F1 is a backup in case the
+eFuse fails short.
 
 R6 on U1's ILIM pin sets the current limit. The relationship is
 **inverse**: a larger resistor gives a *lower* limit.
@@ -88,24 +88,24 @@ R6 on U1's ILIM pin sets the current limit. The relationship is
 | 49.9 kΩ | 520 mA |
 | 210 kΩ | 130 mA |
 
-As a rule of thumb, I_OS(A) ≈ 25.9 / R6(kΩ), valid across TI's recommended range of
+Approximately, I_OS(A) ≈ 25.9 / R6(kΩ). This is valid across TI's recommended range of
 15 kΩ–232 kΩ.
 
 U1's EN (pin 3) is active-high and tied to U1's own input, so the switch is always on.
-FAULT (pin 4) is open-drain and left unconnected, since nobody can see an indicator
-inside a closed NES shell. If you want a fault LED anyway, FAULT can sink 25 mA directly.
+FAULT (pin 4) is open-drain and left unconnected, because an indicator would not be visible
+inside a closed NES shell. If you want a fault LED, FAULT can sink 25 mA directly.
 
 **Useful side effect: a reversed D1 is survivable.** D1 is a unidirectional TVS, so
-installing it backwards puts a forward-biased diode straight across the 5 V rail.
-Before the board had U1, that was a near-dead short, with only the polyfuse (which
-takes seconds to react) in the way. Now the eFuse holds the current to ~1.18 A and
-then shuts down thermally, so the mistake limits itself instead of destroying parts.
+installing it backwards puts a forward-biased diode directly across the 5 V rail.
+Before the board had U1, that was almost a short circuit, and the only protection
+was the polyfuse, which takes seconds to react. Now the eFuse limits the current to
+~1.18 A and then shuts down thermally, so the mistake does not destroy any parts.
 
 ## Test points (v2)
 
 The board has four through-hole test points (2.0 mm pad, 1.0 mm drill) for bring-up.
-Each takes a 0.64 mm square header pin, so you can solder pins in and hang scope
-grabbers off them.
+Each takes a 0.64 mm square header pin, so you can solder in pins and attach scope
+grabbers to them.
 
 The silkscreen shows only the signal name (`VIDEO`, `GND`, `+5V`, `AUDIO`), so you
 can read the board without this table. The reference designators are on F.Fab, for
@@ -121,10 +121,10 @@ reaches the physical board, so the silkscreen showed only `TP1`–`TP4`.
 | TP3 | `/5V`        | 52.0, 43.1    | On the protected 5 V trunk, downstream of F1 and the TPS2553. |
 | TP4 | `/AUDIO_OUT` | 65.9, 28.35   | Audio pass-through between J4 pin 2 and J2. |
 
-TP2 is just a convenience. The whole back layer is ground pour, so any B.Cu feature
+TP2 is only there for convenience. The whole back layer is ground pour, so any B.Cu feature
 works for a ground clip.
 
-To probe the buffer itself rather than its output, go straight to Q1's emitter leg.
+To probe the buffer itself rather than its output, probe Q1's emitter leg directly.
 `Net-(Q1-E)` has no test point.
 
 ## RGB output (v2)
@@ -133,7 +133,7 @@ This board can feed the RGB connector for the [NESRGB](https://etim.net.au/nesrg
 board, which uses the 8-pin mini-DIN pinout of the Micomsoft XRGB-mini Framemeister.
 
 The connector itself is **not** on this board. It comes with the NESRGB kit as a
-panel-mount jack that is epoxied into a 12 mm hole in the shell. R/G/B run straight
+panel-mount jack that is epoxied into a 12 mm hole in the shell. R/G/B go directly
 from the NESRGB to that jack, and **J5** on this board supplies the other three pins:
 
 | J5 pin | Net          | mini-DIN pin | |
@@ -152,10 +152,10 @@ R5 for the RCA jack, R7 for the mini-DIN. A single shared resistor would put two
 75 Ω loads in parallel whenever both cables were plugged in, halving the amplitude.
 
 **One output at a time.** Composite and RGB are alternatives, and the design doesn't
-target using both at once. Whichever cable is plugged in sees a correct 75 Ω source,
-and the unused branch is just an unloaded stub.
+target using both at once. The connected cable sees a correct 75 Ω source, and the unused
+branch is an unloaded stub.
 
-If both cables are plugged in anyway, R7 still gives each output a correctly
+If both cables are plugged in, R7 still gives each output a correctly
 terminated 75 Ω source, and the amplitude doesn't halve. The limit then becomes Q1's
 drive, which is why **R1 is 220 Ω from v2**, down from the original 330 Ω.
 
@@ -224,14 +224,14 @@ does not offer CERN-OHL-S — see [License](#license).
   on v1 that led to three wrong-resistor errors in R1: a 5.1 kΩ and an 820 Ω both
   went in before the correct value. Q1 pin markers are still missing.
 - **VBUS input trace is undersized for its own fuse (all fabbed boards).** `/raw_5v`
-  reaches F1 through 9.06 mm of 0.2 mm trace. At 2.22 A the trace heats past the glass
+  reaches F1 through 9.06 mm of 0.2 mm trace. At 2.22 A the trace heats above the glass
   transition of FR4, and at 2.83 A it chars. F1 (RHEF200) is guaranteed to hold up to
   2.0 A but only guaranteed to trip above 3.8 A, so in the 2.2–3.8 A window the trace
-  can burn out before the fuse ever opens.
+  can be destroyed before the fuse trips.
 
   Root cause: a gap in the netclass patterns. `/5V*`, `GND*` and `VBUS` were assigned
   the `Power` class (0.8 mm), but none of them matched the actual net name `/raw_5v`,
-  so it fell through to `Default` (0.2 mm). DRC can't catch this, because it enforces
+  so it got the `Default` class (0.2 mm). DRC can't catch this, because it enforces
   the board's `min_track_width` (0.2 mm), not the netclass width. Commit `247334c`
   fixes the pattern and reroutes the trace at 0.8 mm.
   **Existing boards need a rework.** See
@@ -239,18 +239,18 @@ does not offer CERN-OHL-S — see [License](#license).
 
 - **D1 does not protect U1.** The installed TVS is a Littelfuse 1.5KE6.8A: stand-off
   5.80 V, breakdown 6.45–7.14 V at 10 mA, clamping 10.5 V at 144.8 A. The TPS2553's
-  absolute maximum on IN and OUT is 7 V, which is where the TVS is only just starting
+  absolute maximum on IN and OUT is 7 V, and at 7 V the TVS has only started
   to conduct. In a real surge, it lets the rail reach 10.5 V. D1 protects the console
   downstream, but not U1.
 
   Moving D1 wouldn't help, since both U1 pins share the same 7 V rating, and no
   avalanche TVS both clamps below 7 V and stands off USB-C's 5.5 V worst case. The
-  real fix is a switch with a built-in overvoltage cutoff. That's a v3 change; v2
+  real fix is a switch with a built-in overvoltage cutoff. That's a v3 change. v2
   ships with this gap.
 - D1's symbol (`Diode:1.5KExxA`) labels its pins A1/A2 and shows no cathode, because
   KiCad uses the same pin names for the unidirectional and bidirectional variants of
   this part. Only the footprint's silkscreen band shows the polarity. The band is at
-  the pad-1 (+5 V) end, which is correct, so go by the band when you assemble by hand.
+  the pad-1 (+5 V) end, which is correct. Use the band when you assemble by hand.
 
 ### Q1 emitter rework (v1 boards)
 
@@ -269,12 +269,12 @@ That revision has two defects:
 This procedure fixes both at once.
 
 > [!CAUTION]
-> **Do not power the board with Q1 installed until the cut is done.** This short kills transistors.
+> **Do not power the board with Q1 installed until the cut is done.** This short destroys transistors.
 > With the emitter clamped at +5 V and the base at the NES video level, the B-E
-> junction is forward-biased by 3–4 V. Q1 saturates into a collector tied straight to
+> junction is forward-biased by 3–4 V. Q1 saturates, with its collector connected directly to
 > ground, and nothing limits the current: Q1 is a 150 mA part, and F1 won't trip until
-> 3.8 A. Every power-up in that state can take out another transistor, which is
-> probably how the first one died.
+> 3.8 A. Every power-up in that state can destroy another transistor. The first
+> transistor probably failed this way.
 
 **Confirm the diagnosis before you cut.**
 
@@ -289,7 +289,7 @@ This procedure fixes both at once.
 | Q1 emitter → +5 V | **~0 Ω** | ~330 Ω (R1) |
 | C1 **+** terminal → +5 V | **~330 Ω** (stranded behind R1) | ~0 Ω |
 
-After the rework, the two readings swap.
+After the rework, the two readings change places.
 
 To identify Q1's legs without relying on the TO-92 orientation, measure each leg:
 
@@ -343,17 +343,16 @@ rework needs **two** jumpers, not one.
    R5 (and R7 on v2) share the same `R_Axial_DIN0207` footprint across four different
    values, and the v1 silkscreen shows none of them.
 
-   At least one board ended up with a 5.1 kΩ from the R3/R4 pile in the R1 position.
+   At least one board got a 5.1 kΩ resistor from the R3/R4 parts in the R1 position.
    That gives ~0.6 mA of standing current instead of ~9 mA. The board looks plausible
    but produces no usable video.
 
-4. **Check that R5 (75 Ω) is fitted.** Measure across its pads; you should see
+4. **Check that R5 (75 Ω) is fitted.** Measure across its pads. You should see
    ~75 Ω. R5 has no parallel path in the circuit (C2 blocks DC on one side and the
-   jack is open on the other), so this doubles as a sanity check of the meter.
+   jack is open on the other), so this is also a check of the meter.
 
 5. **Install the transistor last.** If you power up before the cut is complete, Q1
-   saturates and the rail dumps straight into ground with nothing limiting the
-   current. See the caution above.
+   saturates and current flows from the rail directly to ground with no limit. See the caution above.
 
 Before you power up, check with a meter:
 
@@ -371,9 +370,9 @@ Q1's base is DC-coupled directly to the NES video line, with no bias network. Th
 deliberate, and it took a long bench session to work out why it works.
 
 **The NES mainboard supplies a 1 kΩ pulldown on its video output pin.** It measures
-0.999 kΩ in circuit, the same with the meter leads either way round, so it's a real
-resistor and not a semiconductor junction. Q1's base sources about 46 µA, which that
-1 kΩ soaks up at about 46 mV. The base can't float up, and Q1 can't cut off.
+0.999 kΩ in circuit, the same with the meter leads in either direction, so it's a real
+resistor and not a semiconductor junction. Q1's base sources about 46 µA, and that
+1 kΩ absorbs it with about 46 mV. The base can't float up, and Q1 can't cut off.
 
 That's also why Nintendo's original modulator has no base pulldown. It's consistent
 with the load Nintendo put on that pin, too: a 330 Ω series resistor into a
@@ -407,7 +406,7 @@ that the two agree, and then asserts a set of invariants.
 The most important invariant is that **Q1's emitter is not on any power net**.
 That was the v1 fault: the emitter follower's output was tied to +5 V along with
 J4.3, D1.1 and F1.1, so Q1 saturated into a grounded collector with nothing limiting
-the current. Every power-up killed a transistor.
+the current. Every power-up destroyed a transistor.
 
 **ERC and DRC both passed on that board with no errors.** Neither can tell that a
 net is *wrong*, only that it's internally consistent. That's why this script exists.
@@ -433,7 +432,7 @@ export KICAD_CLI=/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli
 prefab_gate package nes_power_video.kicad_pcb --out pcbway_production
 ```
 
-**prefab-gate now lives in its own repository:
+**prefab-gate is now in its own repository:
 [danielboston38/prefab-gate](https://github.com/danielboston38/prefab-gate).**
 It's a general-purpose KiCad tool with its own MIT license and users beyond this
 project, so it moved out of this hardware repo.
@@ -446,7 +445,7 @@ You can install it any of these ways:
 
 The gate refuses to write a fab package unless the board passes both DRC with zone
 refill *and* schematic parity. It hashes the board and the schematic after the
-refill and checks them again right before publishing, so the package always
+refill and checks them again just before publishing, so the package always
 describes the board the gate actually verified. `manifest.json` records the result
 along with every finding, including the cosmetic findings the gate waived.
 
@@ -466,15 +465,15 @@ so the gate re-verifies the exact board you're paying for.
 <!-- Add step-by-step or reference photos here once you've got a documented build process -->
 
 See BOM.csv for the exact part values and footprints. Every component's sourcing
-data lives in two places, and the two agree:
+data is in two places, and the two agree:
 
 - The `Manufacturer`, `MPN`, `LCSC`, `Supplier Link` and `Datasheet` fields on the
   schematic symbol
 - The matching columns in `BOM.csv`
 
 Generic passives deliberately have no manufacturer part number. They carry a `Spec`
-field instead (tolerance, rating, package), and any part that meets it will do. To
-pull the fields straight from the schematic:
+field instead (tolerance, rating, package), and any part that meets it is correct. To
+get the fields directly from the schematic:
 
 ```
 kicad-cli sch export bom --group-by '' \
@@ -489,11 +488,11 @@ footprint attributes on the board.
 
 Only four parts need reflow — C3, R6, U1 and USB-C1 — and all four are on the top
 side. PCBWay can do those as single-sided SMT while you hand-solder the 15
-through-hole parts. That way you skip the two hardest joints on the board (the
-SOT-23-6 and the Type-C receptacle) without paying for full assembly.
+through-hole parts. You don't have to solder the two most difficult joints on the
+board (the SOT-23-6 and the Type-C receptacle), and you don't pay for full assembly.
 
 `tools/pcbway_assembly.py` builds the SMD-only upload pair from a gate-generated fab
-package. It takes the SMD/THT split from the board, not from a hand-maintained list:
+package. It takes the SMD/THT split from the board, not from a manual list:
 
 ```
 python3 tools/pcbway_assembly.py nes_power_video.kicad_pcb pcbway_production/<timestamp>
@@ -557,8 +556,8 @@ Key notes:
   ~1.2 mm and needs a reroute, so that's a v3 change rather than a patch.
 
   **F1 stays a Littelfuse RHEF200 and is deliberately not an LCSC part.** It's
-  through-hole, so it isn't on the SMD assembly BOM that PCBWay sources anyway, and
-  the LCSC alternatives are worse where it matters:
+  through-hole, so it isn't on the SMD assembly BOM that PCBWay sources. Also, the
+  LCSC alternatives are worse in the important specifications:
   - Jinrui JK30-200 (C369104): I_max drops to 40 A, and the part is 15.2 mm tall.
   - JKSEMI JK16-200T (C5183874): LCSC lists it as through-hole, but its datasheet is
     titled *"JK16 Series Surface Mount PTC Devices"* and shows no land pattern, so its
@@ -576,17 +575,17 @@ Key notes:
 
   The footprint is `Connector_USB:USB_C_Receptacle_GCT_USB4125-xx-x-0190`. Its copper,
   silk, fab, courtyard and drills are byte-identical to the plain `USB4125-xx-x`
-  variant the board used before; only the name, the descr field and the 3D model
+  variant the board used before. Only the name, the descr field and the 3D model
   differ.
 
-  Use the **-0190** variant. Its 1.90 mm shell stake pokes 0.30 mm through this 1.6 mm
+  Use the **-0190** variant. Its 1.90 mm shell stake goes 0.30 mm through this 1.6 mm
   board and gives a fillet on the bottom side. The 1.00 mm stake (plain
-  `USB4125-GF-A`, C3151650) doesn't make it through. LCSC stocks fewer of these than
+  `USB4125-GF-A`, C3151650) doesn't go through the board. LCSC stocks fewer of these than
   of the generic Chinese 6P parts, so order spares.
 - U1 (TPS2553, SOT-23-6): pin 1 (marked by the dot on the package) is IN. The pins run
   IN, GND, EN down one side and OUT, ILIM, FAULT up the other. Order the plain
   TPS2553DBVR. The `-1` suffix is the latch-off variant, which needs a power cycle
-  after every trip; the plain part retries automatically.
+  after every trip. The plain part retries automatically.
 - C3 (100 nF, 0805): TI wants C3 as close to U1 pin 1 as the layout allows. It sits
   immediately to the left of U1.
 - R6 (22k, 0805): sets the current limit. Check the table in
@@ -609,7 +608,7 @@ for the registered details.
 The certification mark above,
 [`certification-mark-US002842-stacked.svg`](./certification-mark-US002842-stacked.svg),
 was issued by OSHWA for this UID. It applies only to this design and doesn't transfer
-to derivatives; each derivative needs its own certification.
+to derivatives. Each derivative needs its own certification.
 
 ## License
 
@@ -624,9 +623,9 @@ approved list, so the certification holds either way.
 
 The practical difference is the physical board. CERN-OHL-S covers the *making* of
 hardware: if someone builds and sells a board, the complete source has to go with
-it. GPL v3's copyleft kicks in when someone distributes the design files, so it
-doesn't reach a board fabricated from them. Both licenses keep the design files
-reciprocal; only CERN-OHL-S extends that to manufactured hardware.
+it. GPL v3's copyleft starts when someone distributes the design files, so it
+doesn't apply to a board fabricated from them. Both licenses keep the design files
+reciprocal. Only CERN-OHL-S does the same for manufactured hardware.
 
 ## Photos
 

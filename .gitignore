@@ -79,3 +79,6 @@ package.json
 
 # ngspice decks emitted by sim/vbus-trace-ampacity/run_all.py
 vbus_sim_decks/
+
+# ngspice decks emitted by sim/power-path/run_all.py
+power_sim_decks/

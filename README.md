@@ -19,6 +19,15 @@ A replacement for the RF modulator in the original Nintendo Entertainment System
 >
 > **→ Read the full advisory: [docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md](docs/SAFETY-ADVISORY-2026-09-vbus-trace-ampacity.md)**
 
+> [!WARNING]
+> **Safety advisory for boards built before C5 was added (2026-11-22).**
+> If you plug a cable that is already live into the board, for example from a USB-A charger with an A-to-C cable,
+> the voltage at U1's input can ring to about 9.5 V. The absolute maximum of U1 is 7 V.
+> A USB-C charger or power bank with a C-to-C cable is safe, because it turns on 5 V only after it detects the board.
+> The fix is a 100 µF electrolytic, C5, on U1's input. You can add it to an existing board in about 10 minutes.
+>
+> **→ Read the full advisory: [docs/SAFETY-ADVISORY-2026-11-hotplug-overshoot.md](docs/SAFETY-ADVISORY-2026-11-hotplug-overshoot.md)**
+
 > **Renamed.** The first revision of this project had the name **Kirby's New Dream**.
 > From v2, the name is **Link to Video**. Items with the old name are the same project:
 > the v1 board silkscreen, the 2026-07-16 PCBWay fab package, and older commits.
